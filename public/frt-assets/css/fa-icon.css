@@ -1,0 +1,200 @@
+.menu-toggler {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 40px;
+    height: 40px;
+    z-index: 2;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.menu-toggler:checked + label {
+    background: transparent;
+}
+.menu-toggler:checked + label:before,
+.menu-toggler:checked + label:after {
+    /*   */
+    width: 40px;
+    transform-origin: 50% 50%;
+}
+.menu-toggler:checked + label:before {
+    transform: rotate(45deg) translateY(-15px) translateX(-15px);
+}
+.menu-toggler:checked + label:after {
+    transform: rotate(-45deg);
+}
+.menu-toggler:checked ~ ul .menu-item {
+    opacity: 1;
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(1) {
+    transform: rotate(0deg) translate(-100px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(2) {
+    transform: rotate(30deg) translateX(-75px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(3) {
+    transform: rotate(150deg) translateX(-75px);
+}
+
+.menu-toggler:checked ~ ul .menu-item:nth-child(4) {
+    transform: rotate(180deg) translateX(-100px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(5) {
+    transform: rotate(240deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item:nth-child(6) {
+    transform: rotate(300deg) translateX(-110px);
+}
+.menu-toggler:checked ~ ul .menu-item a {
+    pointer-events: auto;
+}
+.menu-toggler + label {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: block;
+    z-index: 1;
+    border-radius: 2.5px;
+    background: transparent;
+    transition: transform 0.5s top 0.5s;
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.menu-item:nth-child(1) a {
+    transform: rotate(0deg);
+}
+.menu-item:nth-child(2) a {
+    transform: rotate(-26deg);
+}
+.menu-item:nth-child(3) a {
+    transform: rotate(-150deg);
+}
+.menu-item:nth-child(4) a {
+    transform: rotate(-180deg);
+}
+.menu-item:nth-child(5) a {
+    transform: rotate(-240deg);
+}
+.menu-item:nth-child(6) a {
+    transform: rotate(-300deg);
+}
+.menu-item {
+    position: absolute;
+    display: block;
+    top: 00;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    transition: 0.5s;
+}
+.menu-item a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    line-height: 80px;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 40px;
+    pointer-events: none;
+    transition: 0.2s;
+}
+
+li.menu-item.twitter {
+    color: rgb(244, 242, 242);
+    background: rgb(5, 5, 5);
+    border-radius: 50%;
+}
+
+li.menu-item.whatsapp {
+    color: rgb(244, 242, 242);
+    background: rgb(39, 194, 36);
+    border-radius: 50%;
+}
+
+li.menu-item.facebook {
+    color: rgb(244, 242, 242);
+    background: #3b5998;
+    border-radius: 50%;
+}
+
+li.menu-item.instagram {
+    background: #f09433;
+    border-radius: 50%;
+    background: -moz-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    background: -webkit-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    background: linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+}
+
+.menu-item a:hover {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    color: rgb(247, 241, 241);
+    background: rgba(253, 253, 253, 0.3);
+    font-size: 44.44px;
+}
+
+.checked {
+    color: black;
+}
+
+.menu-toggler:checked ~ .lobel-menu {
+    opacity: 1;
+    transform: translateX(-50%) translateY(calc(100% + 10px));
+    pointer-events: auto;
+}
+
+nav.menu.lobel-menu {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    width: 100%;
+}
+
+.lobel-menu li.menu-item {
+    height: 40px;
+    width: 40px;
+}
+
+.lobel-menu li.menu-item > a {
+    font-size: 20px;
+}

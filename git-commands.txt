@@ -1,0 +1,53 @@
+>> git clone <repository_url>
+---- Clone repository to local/server system
+
+>> git fetch --all
+---- fetch all Remote branches to local setup
+
+>> git branch --all
+---- list all branches in local setup
+
+>> git checkout -b <branch_name>
+---- create new branch
+
+>> git checkout <folder_name>/<file_name/file_path>
+---- remove/discard the changes
+
+>> git status
+---- show list of files with current status
+
+>> git add <folder_name>/<file_name>
+--- add specific file or folder to git
+
+>> git add .
+---- add all files to changes
+
+>> git commit -m "<Message>"
+---- commit the changes to git with Message
+
+
+>> git push origin <branch_name>
+---- push all chanhges to remote branch
+
+>> git pull origin <branch_name>
+---- fetch latest code of branch_name
+
+
+>> git stash
+---- save all local changes to a local file.
+
+>> git stash apply
+---- apply all stashed changes
+
+>> git config user.name <name>
+---- set user name for local repository
+
+>> git config user.email <email>
+---- set user email for local repository
+
+>> git config --list
+---- show configurations
+
+
+
+

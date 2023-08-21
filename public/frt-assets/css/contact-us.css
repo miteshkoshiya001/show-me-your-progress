@@ -1,0 +1,76 @@
+.contact-us .title {
+    font-family: "Pacifico", cursive;
+    color: #212529;
+    font-size: 2.5rem;
+}
+.contact-us .form-control {
+    background-color: #f2f6f8;
+    border-radius: 2rem;
+    border: none;
+    box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.11);
+}
+.contact-us .form-control.thick {
+    height: 3.3rem;
+    padding: 0.5rem 3.5rem;
+}
+.contact-us .form-control:focus {
+    background-color: #f2f6f8;
+    border: none;
+    box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.11);
+}
+.contact-us .message .form-control {
+    padding: 0.5rem 1.8rem;
+}
+.contact-us ::placeholder {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #838788;
+    position: relative;
+    left: 0;
+}
+.contact-us input,
+.contact-us textarea {
+    font-family: "Quicksand", sans-serif;
+    color: #212529;
+    font-size: 1.1rem;
+}
+.contact-us .icon {
+    color: #57565c;
+    height: 1.3rem;
+    position: relative;
+    left: 1.5rem;
+    top: 1.1rem;
+}
+
+.btn.btn-primary {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding: 0 3rem;
+    border: 0;
+    border-radius: 3rem;
+    background-color: #322f52;
+    color: rgb(240, 240, 182);
+    background-size: 300% 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn.btn-primary:hover:enabled {
+    box-shadow: 0 0.5em 0.5em -0.4em #ff923cba;
+    background-size: 100% 100%;
+    transform: translateY(-0.15em);
+}
+
+@media (max-width: 767px) {
+    .fifth_section {
+        flex-direction: column-reverse;
+    }
+
+    .col-lg-6,
+    .col-md-12 {
+        width: 100%;
+        order: 1;
+    }
+}
