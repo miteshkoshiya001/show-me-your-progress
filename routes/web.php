@@ -72,6 +72,10 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 // Google login routes
 Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+Route::post('/store-selected-user-type', [LoginController::class, 'storeSelectedUserType'])->name('storeSelectedUserType');
+Route::get('/check-referral-code-validity', [RegisterController::class,'checkReferralCodeValidity'])
+    ->name('checkReferralCodeValidity');
+
 
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');

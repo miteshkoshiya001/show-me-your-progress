@@ -14,7 +14,7 @@
                             {{ $settings['heading4'] }}
                         </p> --}}
 
-                        <div class="counters-wrapper">
+                        {{-- <div class="counters-wrapper">
                             <div class="counter-container">
                                 <i class="fa-solid fa-user user"></i>
                                 <div class="counter fw-bolder" data-target="{{ $userCount }}"></div>
@@ -25,7 +25,7 @@
                                 <div class="counter fw-bolder" data-target="{{ $totalCounts }}"></div>
                                 <span>Generated Stickers</span>
                             </div>
-                        </div>
+                        </div> --}}
 
                         @if (auth()->user() == null)
                             <div class="button">
@@ -33,9 +33,8 @@
                             </div>
                         @else
                             <div class="button">
-                                <button class="btn generate_sticker" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop">Try
-                                    now</button>
+                                <a href="{{ route('register') }}?referral_code={{ auth()->user()->referral_code }}">Invite Friends</a>
+
                             </div>
                         @endif
                     </div>
@@ -54,7 +53,7 @@
                                 <div class="plans-model">
                                     <div class="title">Choose Rider Category</div>
                                     <div class="d-flex justify-content-between flex-wrap row">
-                                        @foreach ($raceTypes as $raceType)
+                                        {{-- @foreach ($raceTypes as $raceType)
                                             <label class="plan basic-plan mb-3 col-sm-4"
                                                 for="rider_category_{{ $raceType->id }}">
                                                 <input type="radio" name="plan" id="rider_category_{{ $raceType->id }}"
@@ -65,7 +64,7 @@
                                                     </div>
                                                 </div>
                                             </label>
-                                        @endforeach
+                                        @endforeach --}}
                                     </div>
                                     {{-- Loader --}}
                                     <div class="ajax-loading text-center d-none">
@@ -148,14 +147,14 @@
 
                 <div class="col-lg-6 image-container">
                     <div class="row mt-5">
-                        @if (!$heroImages->isEmpty())
+                        {{-- @if (!$heroImages->isEmpty())
                             @foreach ($heroImages as $heroImage)
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                                     <img src="{{ asset('storage/' . $heroImage->image_path) }}" alt="Hero Image"
                                         class="img-fluid">
                                 </div>
                             @endforeach
-                        @else
+                        @else --}}
                             <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                                 <img src="{{ asset('frt-assets/images/sticker1.png') }}" alt="Hero Image"
                                     class="img-fluid">
@@ -172,7 +171,7 @@
                                 <img src="{{ asset('frt-assets/images/sticker4.png') }}" alt="Hero Image"
                                     class="img-fluid">
                             </div>
-                        @endif
+                        {{-- @endif --}}
                     </div>
                 </div>
             </div>
@@ -183,13 +182,13 @@
         <h1 class="text-center mb-5 mt-4 Creative" style="font-size: 40px"><b>Upcoming Events</b></h1>
         <div class="container swiper">
             <div class="event-slider swiper-wrapper">
-                @if (!$events->isEmpty())
+                {{-- @if (!$events->isEmpty())
                     @foreach ($events as $event)
                         <div class="col-lg-3 box4 box swiper-slide text-center">
                             <img src="{{ asset('storage/' . $event->image) }}" alt="" width="100%">
                         </div>
                     @endforeach
-                @else
+                @else --}}
                     <div class="col-lg-3 box4 box swiper-slide text-center">
                         <img src="{{ asset('frt-assets/images/sticker6.png') }}" alt="" width="100%">
                     </div>
@@ -211,7 +210,7 @@
                     <div class="col-lg-3 box4 box swiper-slide text-center">
                         <img src="{{ asset('frt-assets/images/sticker4.png') }}" alt="" width="100%">
                     </div>
-                @endif
+                {{-- @endif --}}
             </div>
         </div>
         </div>

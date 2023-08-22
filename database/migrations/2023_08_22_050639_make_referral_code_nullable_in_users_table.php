@@ -9,10 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('race_types', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('referral_code')->nullable()->change();
+            $table->string('first_name')->nullable()->change();
+            $table->string('last_name')->nullable()->change();
         });
     }
 
@@ -21,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('race_types', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

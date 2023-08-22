@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>SportFanStickers | Login</title>
+    <title>fitness-app | Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -28,6 +28,11 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('frt-assets/css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frt-assets/css/main.css') }}">
+    <style>
+        .wrap-login100 {
+            width: 500px;
+        }
+    </style>
     <!--===============================================================================================-->
 </head>
 
@@ -38,9 +43,18 @@
             <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-38">
                 <form class="login100-form validate-form" method="POST" action="{{ route('login.post') }}">
                     @csrf
-                    <span class="login100-form-title p-b-4">
+                    <span class="login100-form-title p-b-4 mb-5">
                         Login
                     </span>
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong> {{ session('error') }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    @endif
+
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             @foreach ($errors->all() as $error)
@@ -51,12 +65,13 @@
                             </button>
                         </div>
                     @endif
-                    <div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
-                        <span class="label-input100">Email</span>
-                        <input class="input100" type="email" value="{{ old('email') }}" name="email"
-                            placeholder="Type your email" value="{{ old('email') }}">
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <span class="label-input100">Username or Email</span>
+                        <input class="input100" type="text" value="{{ old('username') }}" name="username"
+                            placeholder="Enter your username or email" value="{{ old('username') }}">
                         <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
+
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
                         <span class="label-input100">Password</span>
