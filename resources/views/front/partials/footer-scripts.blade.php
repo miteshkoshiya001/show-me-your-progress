@@ -4,7 +4,8 @@
 <script src="{{ asset('frt-assets/js/select2.min.js') }}"></script>
 <script src="{{ asset('frt-assets/js/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('js/loader.js') }}"></script>
-
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/cropme@latest/dist/cropme.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
 <script src='https://unpkg.com/feather-icons'></script>
@@ -13,7 +14,9 @@
 
 <script>
     $(document).ready(function() {
-
+        $(document).ready(function() {
+            $('#userTable').DataTable();
+        });
         /* Add Lazy Loading in all images */
         const allImages = $('img');
         if (allImages.length > 0) {
@@ -69,5 +72,6 @@
                 }
             });
         });
+
     });
 </script>

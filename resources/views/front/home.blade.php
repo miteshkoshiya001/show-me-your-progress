@@ -33,8 +33,7 @@
                             </div>
                         @else
                             <div class="button">
-                                <a href="{{ route('register') }}?referral_code={{ auth()->user()->referral_code }}">Invite Friends</a>
-
+                                <button class="btn btn-primary" id="copyButton">Copy Invite Link</button>
                             </div>
                         @endif
                     </div>
@@ -155,22 +154,18 @@
                                 </div>
                             @endforeach
                         @else --}}
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                                <img src="{{ asset('frt-assets/images/sticker1.png') }}" alt="Hero Image"
-                                    class="img-fluid">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                                <img src="{{ asset('frt-assets/images/sticker2.png') }}" alt="Hero Image"
-                                    class="img-fluid">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                                <img src="{{ asset('frt-assets/images/sticker3.png') }}" alt="Hero Image"
-                                    class="img-fluid">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                                <img src="{{ asset('frt-assets/images/sticker4.png') }}" alt="Hero Image"
-                                    class="img-fluid">
-                            </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <img src="{{ asset('frt-assets/images/sticker1.png') }}" alt="Hero Image" class="img-fluid">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <img src="{{ asset('frt-assets/images/sticker2.png') }}" alt="Hero Image" class="img-fluid">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <img src="{{ asset('frt-assets/images/sticker3.png') }}" alt="Hero Image" class="img-fluid">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <img src="{{ asset('frt-assets/images/sticker4.png') }}" alt="Hero Image" class="img-fluid">
+                        </div>
                         {{-- @endif --}}
                     </div>
                 </div>
@@ -179,42 +174,35 @@
     </section>
 
     <section class="second_section pt-5">
-        <h1 class="text-center mb-5 mt-4 Creative" style="font-size: 40px"><b>Upcoming Events</b></h1>
-        <div class="container swiper">
-            <div class="event-slider swiper-wrapper">
-                {{-- @if (!$events->isEmpty())
-                    @foreach ($events as $event)
-                        <div class="col-lg-3 box4 box swiper-slide text-center">
-                            <img src="{{ asset('storage/' . $event->image) }}" alt="" width="100%">
-                        </div>
-                    @endforeach
-                @else --}}
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker6.png') }}" alt="" width="100%">
-                    </div>
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker3.png') }}" alt="" width="100%">
-                    </div>
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker4.png') }}" alt="" width="100%">
-                    </div>
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker9.png') }}" alt="" width="100%">
-                    </div>
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker1.png') }}" alt="" width="100%">
-                    </div>
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker8.png') }}" alt="" width="100%">
-                    </div>
-                    <div class="col-lg-3 box4 box swiper-slide text-center">
-                        <img src="{{ asset('frt-assets/images/sticker4.png') }}" alt="" width="100%">
-                    </div>
-                {{-- @endif --}}
-            </div>
-        </div>
+        <h1 class="text-center mb-5 mt-4 Creative" style="font-size: 40px"><b>Users</b></h1>
+        <div class="container">
+            <table id="userTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>User Name</th>
+                        <th>Member Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- @foreach ($users as $user)
+                        <tr>
+                            <td><img src="{{ $user->profile_picture_url }}" alt="Profile Picture" width="50"></td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->countMembersByUserId($user->id) }}</td>
+                        </tr>
+                    @endforeach --}}
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
+
 
     <section class="third_section d-none">
         <div class="container">
@@ -425,6 +413,9 @@
             </g>
         </svg>
     </div>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+        <div id="alertContainer"></div>
+    </div>
 @endsection
 @section('page-js')
     <script src="{{ asset('js/image_upload.js') }}"></script>
@@ -432,7 +423,41 @@
     <script>
         $(document).ready(function() {
 
-            /*  */
+            function showDismissableMessage(message, type) {
+                var alertContainer = document.getElementById("alertContainer");
+
+                var alertDiv = document.createElement("div");
+                alertDiv.className = "alert alert-" + type + " alert-dismissible fade show";
+                alertDiv.setAttribute("role", "alert");
+                alertDiv.innerHTML =
+                    message +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+                alertContainer.appendChild(alertDiv);
+
+                setTimeout(function() {
+                    alertDiv.remove();
+                }, 5000); // 5 seconds
+            }
+
+            document.getElementById("copyButton").addEventListener("click", function() {
+                @if (auth()->check())
+                    var referralLink =
+                        "{{ route('register') }}?referral_code={{ auth()->user()->referral_code }}";
+
+                    // Copy the link to the clipboard
+                    var dummy = document.createElement("textarea");
+                    document.body.appendChild(dummy);
+                    dummy.value = referralLink;
+                    dummy.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(dummy);
+
+                    // Show the dismissable message
+                    showDismissableMessage("Referral link copied to clipboard", "success");
+                @endif
+            });
+
             const counters = document.querySelectorAll(".counter");
 
             counters.forEach((counter) => {

@@ -110,7 +110,6 @@ class LoginController extends Controller
         $userType = $request->input('user_type');
         Session::put('selected_user_type', $userType);
         return response()->json(['message' => 'User type stored in session']);
-        dd($userType);
     }
     public function handleGoogleCallback()
     {
@@ -128,7 +127,7 @@ class LoginController extends Controller
                 $newUser->username = $googleUser->name;
                 $newUser->email = $googleUser->email;
                 $newUser->google_id = $googleUser->id;
-                $newUser->referral_code= $referralCode;
+                $newUser->referral_code = $referralCode;
                 $newUser->password = Hash::make("123456");
 
                 // Retrieve and set the user type from the session
