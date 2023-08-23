@@ -6,20 +6,9 @@ use App\Models\User;
 
 class SMYPHelper
 {
-    public static function getMemberCountAndData($userId)
+    public static function countMembersByUserId($userId)
     {
-        $user = User::find($userId);
-
-        if (!$user) {
-            return null; // User not found
-        }
-
-        $memberCount = $user->members()->count();
-        $members = $user->members()->get();
-
-        return [
-            'memberCount' => $memberCount,
-            'members' => $members,
-        ];
+        return User::where('parent_id', $userId)->count();
     }
+
 }
