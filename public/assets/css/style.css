@@ -1,0 +1,166 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+:root {
+	--primary-bg: #94a8fd;
+	--primary-bg-rgb: rgb(148,168,253);
+	--primary-text: #252219;
+	--primary-box-shadow: rgb(255 234 229);;
+}
+
+.user-img {
+	height: 50px;
+	width: 50px;
+}
+
+#color {
+	height: calc(1em + 1rem + 1px);
+	padding: 0px;
+}
+
+.uomModel {
+	background: #00000073;
+	opacity: revert;
+}
+
+.products .dropzone {
+	min-height: 140px !important;
+}
+
+.products .dropzone .dz-message:before {
+	font-size: 30px;
+}
+
+.products .dropzone-selected-image {
+	border: 1px solid var(--primary-bg);
+	border-radius: 6px;
+}
+
+.products .dropzone-selected-image .show-image {
+	height: 60px;
+}
+
+.status-select {
+	background-color: transparent;
+	border: none;
+}
+
+.swal2-radio {
+	display: grid !important;
+}
+
+.main-menu.menu-light .navigation>li.active>a {
+	background: -webkit-linear-gradient(332deg, var(--primary-bg), var(--primary-bg-rgb));
+	background: linear-gradient(118deg, var(--primary-bg), var(--primary-bg-rgb));
+	box-shadow: 0 0 10px 1px var(--primary-bg-rgb);
+}
+
+.primary {
+    color: var(--primary-bg) !important;
+}
+
+.btn-primary {
+    border-color: var(--primary-bg) !important;
+    background-color: var(--primary-bg) !important;
+}
+
+.btn-primary:hover {
+    border-color: var(--primary-bg) !important;
+    box-shadow: 0 8px 25px -8px var(--primary-bg);
+}
+
+.form-control:focus {
+    border-color: var(--primary-bg);
+}
+
+.btn-outline-primary, .btn-outline-primary:hover {
+    border: 1px solid var(--primary-bg);
+    color:  var(--primary-bg);
+}
+
+.breadcrumb-item a, .dropdown .dropdown-menu .dropdown-item:hover, .text-primary{
+    color: var(--primary-bg) !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-bg);
+}
+
+.header-navbar .navbar-container ul.nav li.dropdown-user .dropdown-menu-right .dropdown-item:hover, .header-navbar .navbar-container ul.nav li.dropdown-user .dropdown-menu-right .dropdown-item:active {
+    background: var(--primary-bg);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-box-shadow);
+}
+
+a.text-primary:hover, a.text-primary:focus {
+    color: var(--primary-bg) !important;
+}
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+	background-color: var(--primary-bg);
+    border-color: var(--primary-bg);
+}
+
+.custom-file-input:focus ~ .custom-file-label {
+	border-color: var(--primary-bg);
+}
+
+.modal .modal-header .close span {
+	color: var(--primary-bg) !important;
+}
+
+#dpz-multiple-files {
+    border: 2px dashed var(--primary-bg);
+}
+
+.dz-message, .dropzone-selected-image .fw-bold{
+	color: var(--primary-bg) !important;
+}
+
+.dropzone .dz-message:before, .pagination .page-item .page-link:hover, .card-link {
+    color: var(--primary-bg) !important;
+}
+
+.aggrid .ag-root .ag-icon-checkbox-checked, .aggrid .ag-root  .ag-icon-checkbox-indeterminate {
+	color: var(--primary-bg) !important;
+}
+
+.ag-theme-material .ag-ltr .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected) {
+	border: 1px solid var(--primary-bg) !important;
+}
+
+.ag-theme-material .ag-input-wrapper input:not([type]):focus{
+	border-bottom: 2px solid var(--primary-bg);
+}
+
+.ag-cell a {
+	color: var(--primary-bg) !important;
+}
+
+.aggrid .ag-paging-panel span[ref='lbCurrent'] {
+    background-color: var(--primary-bg) !important;
+}
+
+table.dataTable tbody tr.selected {
+    background-color: rgb(247 228 224 / 24%) !important;
+    color: var(--primary-bg) !important;
+    box-shadow: 0 0 1px 0 var(--primary-bg) !important;
+}
+
+.form-control:focus ~ .form-control-position i, .form-label-group > input:focus:not(:placeholder-shown) ~ label {
+    color: var(--primary-bg) !important;
+}
+
+.footer  a, table.dataTable tbody tr.selected a{
+	color: var(--primary-bg) !important;
+}
+
