@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('frt-assets/css/sweetalert2.min.css') }}">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
     <link rel="stylesheet" href="{{ asset('frt-assets/css/contact-us.css') }}">
     <link rel="stylesheet" href="{{ asset('frt-assets/css/swiper-bundle.min.css') }}" />
@@ -20,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('frt-assets/css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('frt-assets/css/fa-icon.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropme@latest/dist/cropme.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel='stylesheet'
         href='https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Quicksand&amp;display=swap'>

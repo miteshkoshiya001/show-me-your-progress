@@ -66,6 +66,9 @@
                                 <label for="parent">Parent</label>
                                 <input type="radio" name="payment" id="trainer" />
                                 <label for="trainer">Trainer</label>
+                                <input type="radio" name="payment" id="teacher" />
+                                <label for="teacher">Teacher</label>
+
                             </center>
                             <div class="container-login100-form-btn p-t-31">
                                 <div class="wrap-login100-form-btn">

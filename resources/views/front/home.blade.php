@@ -1,7 +1,7 @@
 @extends('front.front-template')
 
 @section('content')
-    <section class="first_section">
+    <section class="first_section mb-10">
         <div class="container mt-5 pt-5">
             <div class="row">
                 <div class="col-lg-6">
@@ -173,36 +173,194 @@
         </div>
     </section>
 
-    <section class="second_section pt-5">
-        <h1 class="text-center mb-5 mt-4 Creative" style="font-size: 40px"><b>Users</b></h1>
-        <div class="container">
-            <table id="userTable" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Profile Picture</th>
-                        <th>User Name</th>
-                        <th>Member Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{-- @foreach ($users as $user)
+
+    @if (auth()->check() &&
+            (auth()->user()->user_type === 'parent' ||
+                auth()->user()->user_type === 'trainer' ||
+                auth()->user()->user_type === 'teacher'))
+        <section class="second_section">
+            <h1 class="text-center mb-5 mt-4 Creative" style="font-size: 40px"><b>My Members</b></h1>
+            <div class="container">
+                <table id="userTable" class="table  mt-5">
+                    <thead>
                         <tr>
-                            <td><img src="{{ $user->profile_picture_url }}" alt="Profile Picture" width="50"></td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->countMembersByUserId($user->id) }}</td>
+                            <th>Avatar</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach --}}
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
+                    </thead>
+                    <tbody>
+                        @foreach ($usersData as $user)
+                            <tr>
+                                @if ($user->avatar)
+                                    <td><img src="{{ asset('storage/' . $user->avatar) }}" alt="User Avatar"
+                                            width="100" loading="lazy"></td>
+                                @else
+                                    <td>--</td>
+                                @endif
+                                <td>{{ $user->email ?? '--' }}</td>
+                                <td>{{ $user->username }}</td>
+                                <td><a href="{{ route('show.profile') }}" class="btn"
+                                        style="background-color: #322f52; color:#dbdbaa;">View
+                                        Progress</a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    @elseif (in_array(auth()->user()->user_type, ['child', 'student', 'trainee']))
+        <!-- Stickers box for child, student, or trainee -->
+        <section class="stickers-section">
+            <div class="container profile">
+                <div class="row">
+                    {{-- <h2>Stickers for Students</h2> --}}
 
-                    </tr>
-                </tbody>
-            </table>
+                    <!-- Loop through stickers based on user type -->
+                    @if (auth()->user()->user_type === 'child')
+                        @foreach ($parentStickers as $sticker)
+                            {{-- <div class="sticker">
+                                <img src="{{ asset('storage/' . $sticker->sticker_template) }}" alt="Sticker"
+                                    width="500">
+                            </div> --}}
+                            <div class="col-lg-3 col-md-3 box1 box">
+                                <img src="{{ asset('storage/' . $sticker->sticker_template) }}" alt=""
+                                    width="100" id="imgfb">
+
+                                <nav class="menu lobel-menu">
+                                    <input class="menu-toggler" type="checkbox">
+                                    <label for="menu-toggler">
+                                        <i class="fas fa-share-alt"></i>
+                                    </label>
+                                    <ul>
+                                        <li class="menu-item facebook">
+                                            <a href="#" data-platform="facebook" onclick="fb()"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div class="download-button">
+                                    <a href="" download>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    @elseif (auth()->user()->user_type === 'trainee')
+                        @foreach ($trainerStickers as $sticker)
+                            <div class="col-lg-3 col-md-3 box1 box">
+                                <img src="{{ asset('storage/' . $sticker->sticker_template) }}" alt=""
+                                    width="100" id="imgfb">
+
+                                <nav class="menu lobel-menu">
+                                    <input class="menu-toggler" type="checkbox">
+                                    <label for="menu-toggler">
+                                        <i class="fas fa-share-alt"></i>
+                                    </label>
+                                    <ul>
+                                        <li class="menu-item facebook">
+                                            <a href="#" data-platform="facebook" onclick="fb()"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div class="download-button">
+                                    <a href="" download>
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    @elseif (auth()->user()->user_type === 'student')
+                        @foreach ($teacherStickers as $sticker)
+                            <div class="col-lg-3 col-md-3 box1 box">
+                                <img src="{{ asset('storage/' . $sticker->sticker_template) }}" alt=""
+                                    width="100" id="imgfb">
+                            </div>
+                        @endforeach
+                    @endif
+
+                </div>
+            </div>
+        </section>
+    @endif
+
+
+    <!-- Page Content -->
+    <div class="container page-top">
+        <div class="row">
+            @if (auth()->user()->user_type === 'student')
+            @foreach ($teacherStickers as $sticker)
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <img src="{{ asset('storage/' . $sticker->sticker_template) }}"
+                        class="zoom img-fluid " alt="">
+            </div>
+            @endforeach
+            @endif
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/38238/maldives-ile-beach-sun-38238.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/38238/maldives-ile-beach-sun-38238.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                        class="zoom img-fluid" alt="">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/158827/field-corn-air-frisch-158827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/158827/field-corn-air-frisch-158827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                        class="zoom img-fluid " alt="">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/302804/pexels-photo-302804.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/302804/pexels-photo-302804.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                        class="zoom img-fluid " alt="">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/1038914/pexels-photo-1038914.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/1038914/pexels-photo-1038914.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                        class="zoom img-fluid " alt="">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/414645/pexels-photo-414645.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/414645/pexels-photo-414645.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+                        class="zoom img-fluid " alt="">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/56005/fiji-beach-sand-palm-trees-56005.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/56005/fiji-beach-sand-palm-trees-56005.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                        class="zoom img-fluid " alt="">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="https://images.pexels.com/photos/1038002/pexels-photo-1038002.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    class="fancybox" rel="ligthbox">
+                    <img src="https://images.pexels.com/photos/1038002/pexels-photo-1038002.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                        class="zoom img-fluid " alt="">
+                </a>
+            </div>
+
+
+
+
         </div>
-    </section>
-
+    </div>
 
     <section class="third_section d-none">
         <div class="container">
@@ -422,6 +580,22 @@
 
     <script>
         $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+
+        $(document).ready(function() {
+
 
             function showDismissableMessage(message, type) {
                 var alertContainer = document.getElementById("alertContainer");

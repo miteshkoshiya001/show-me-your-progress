@@ -26,11 +26,11 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="driver_id" class="form-label">Driver</label>
-                            <select class="form-select" id="driver_id" name="driver_id" required>
-                                <option value="">Select Driver</option>
-                                @foreach ($drivers as $driver)
-                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                            <label for="user_type" class="form-label">User Type</label>
+                            <select class="form-select" id="user_type" name="user_type" required>
+                                <option value="">Select user</option>
+                                @foreach (['parent', 'trainer', 'teacher'] as $enumValue)
+                                    <option value="{{ $enumValue }}">{{ ucfirst($enumValue) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -78,7 +78,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Driver ID</th>
+                            <th>User Type</th>
                             <th>Sticker Template</th>
                             <th>Template X</th>
                             <th>Template Y</th>
@@ -91,7 +91,7 @@
                         @foreach ($stickers as $sticker)
                             <tr>
                                 <td>{{ $sticker->id }}</td>
-                                <td>{{ $sticker->driver->name }}</td>
+                                <td>{{ $sticker->user_type }}</td>
                                 <td><img src="{{ asset('storage/' . $sticker->sticker_template) }}" alt="Sticker Template"
                                         class="img-thumbnail" width="100" loading="lazy"></td>
                                 <td>{{ $sticker->template_x }}</td>
@@ -133,13 +133,19 @@
 
                                                 <div class="mb-3">
                                                     <label for="editDriver" class="form-label">Driver</label>
-                                                    <select class="form-select" id="editDriver" name="driver_id"
+                                                    <select class="form-select" id="editUserType" name="user_type"
                                                         required>
-                                                        @foreach ($drivers as $driver)
+                                                        @foreach (['parent', 'trainer', 'teacher'] as $enumValue)
+                                                            <option value="{{ $enumValue }}"
+                                                                {{ $sticker->user_type === $enumValue ? 'selected' : '' }}>
+                                                                {{ ucfirst($enumValue) }}
+                                                            </option>
+                                                        @endforeach
+                                                        {{-- @foreach ($drivers as $driver)
                                                             <option value="{{ $driver->id }}"
                                                                 {{ $driver->id == $sticker->driver_id ? 'selected' : '' }}>
                                                                 {{ $driver->name }}</option>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </select>
                                                 </div>
 
@@ -177,15 +183,19 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="editStickerTemplate" class="form-label">Sticker Template</label>
-                                                    <input type="file" class="form-control" id="editStickerTemplate" name="sticker_template">
+                                                    <label for="editStickerTemplate" class="form-label">Sticker
+                                                        Template</label>
+                                                    <input type="file" class="form-control" id="editStickerTemplate"
+                                                        name="sticker_template">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label>Current Sticker Template</label>
                                                     @if ($sticker->sticker_template)
                                                         <div>
-                                                            <img src="{{ asset('storage/' . $sticker->sticker_template) }}" alt="Current Sticker Template" class="img-thumbnail" width="100">
+                                                            <img src="{{ asset('storage/' . $sticker->sticker_template) }}"
+                                                                alt="Current Sticker Template" class="img-thumbnail"
+                                                                width="100">
                                                         </div>
                                                     @else
                                                         <p>No sticker template available.</p>

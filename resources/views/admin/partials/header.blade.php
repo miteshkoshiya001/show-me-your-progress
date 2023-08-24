@@ -50,7 +50,7 @@
     <!-- Page CSS -->
     <style>
         .template-customizer-open-btn {
-            display: none !important;
+            /* display: none !important; */
         }
     </style>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/cards-advance.css') }}" />

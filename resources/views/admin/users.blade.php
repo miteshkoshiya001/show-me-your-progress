@@ -25,13 +25,21 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Avatar</th>
+                            <th>User Type</th>
                             <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
-                                <td>{{ $user->name ?: '-' }}</td>
+                                <td>{{ $user->username ?: '-' }}</td>
+                                @if ($user->avatar)
+                                    <td><img src="{{ asset('storage/' . $user->avatar) }}" alt="User Avatar" width="50" loading="lazy"></td>
+                                @else
+                                    <td>--</td>
+                                @endif
+                                <td>{{ $user->user_type }}</td>
                                 <td>{{ $user->email }}</td>
                             </tr>
                         @endforeach

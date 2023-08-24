@@ -27,7 +27,7 @@
                                       <div data-i18n="Dashboard">Dashboard</div>
                                   </a>
                               </li>
-                              <li class="menu-item {{ request()->routeIs('admin.hero') ? 'active' : '' }}">
+                              {{-- <li class="menu-item {{ request()->routeIs('admin.hero') ? 'active' : '' }}">
                                   <a href="{{ route('admin.hero') }}" class="menu-link">
                                       <div data-i18n="Hero Images">Hero Images</div>
                                   </a>
@@ -46,28 +46,28 @@
                                   <a href="{{ route('admin.drivers.index') }}" class="menu-link">
                                       <div data-i18n="Drivers">Drivers</div>
                                   </a>
-                              </li>
+                              </li> --}}
                               <li class="menu-item {{ request()->routeIs('admin.stickers.index') ? 'active' : '' }}">
                                   <a href="{{ route('admin.stickers.index') }}" class="menu-link">
                                       <div data-i18n="Stickers">Stickers</div>
                                   </a>
                               </li>
-                              <li class="menu-item {{ request()->routeIs('admin.feedbacks') ? 'active' : '' }}">
+                              {{-- <li class="menu-item {{ request()->routeIs('admin.feedbacks') ? 'active' : '' }}">
                                   <a href="{{ route('admin.feedbacks') }}" class="menu-link">
                                       <div data-i18n="User Feedback">User Feedback</div>
                                   </a>
-                              </li>
+                              </li> --}}
                               <li class="menu-item {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
                                   <a href="{{ route('admin.users.index') }}" class="menu-link">
                                       <div data-i18n="Users List">Users</div>
                                   </a>
                               </li>
 
-                              <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
+                              {{-- <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
                                   <a href="{{ route('admin.settings.index') }}" class="menu-link">
                                       <div data-i18n="Settings">Settings</div>
                                   </a>
-                              </li>
+                              </li> --}}
                           </ul>
                       </li>
 

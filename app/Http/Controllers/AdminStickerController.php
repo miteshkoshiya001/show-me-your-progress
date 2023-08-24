@@ -11,17 +11,17 @@ class AdminStickerController extends Controller
 {
     public function index()
     {
-        $stickers = Sticker::has('driver')->get();
-        $drivers = Driver::all();
+        $stickers = Sticker::all();
 
-        return view('admin.stickers', compact('stickers', 'drivers'));
+
+        return view('admin.stickers', compact('stickers'));
     }
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'driver_id' => 'required|exists:drivers,id',
+            'user_type' => 'required',
             'sticker_template' => 'required|image|mimes:jpeg,png,jpg,gif',
             'template_x' => 'required|numeric',
             'template_y' => 'required|numeric',
@@ -36,7 +36,7 @@ class AdminStickerController extends Controller
         $stickerTemplatePath = str_replace('public/', '', $stickerTemplatePath);
 
         Sticker::create([
-            'driver_id' => $request->input('driver_id'),
+            'user_type' => $request->input('user_type'),
             'sticker_template' => $stickerTemplatePath,
             'template_x' => $request->input('template_x'),
             'template_y' => $request->input('template_y'),
@@ -51,19 +51,19 @@ class AdminStickerController extends Controller
     public function edit($id)
     {
         $sticker = Sticker::findOrFail($id);
-        $drivers = Driver::all();
-        return view('admin.stickers', compact('sticker', 'drivers'));
+        // $drivers = Driver::all();
+        return view('admin.stickers', compact('sticker'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'driver_id' => 'required|exists:drivers,id',
+            'user_type' => 'required',
+            'sticker_template' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'template_x' => 'required|integer|min:1',
             'template_y' => 'required|integer|min:1',
             'template_width' => 'required|integer|min:1',
             'template_height' => 'required|integer|min:1',
-            'sticker_template' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $sticker = Sticker::findOrFail($id);
@@ -74,7 +74,7 @@ class AdminStickerController extends Controller
         }
 
         // Update sticker details
-        $sticker->driver_id = $request->driver_id;
+        $sticker->user_type = $request->user_type;
         $sticker->template_x = $request->template_x;
         $sticker->template_y = $request->template_y;
         $sticker->template_width = $request->template_width;
@@ -90,6 +90,7 @@ class AdminStickerController extends Controller
 
         return redirect()->route('admin.stickers.index')->with('success', 'Sticker updated successfully.');
     }
+
 
 
     public function destroy($id)

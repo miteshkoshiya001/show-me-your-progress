@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Helpers\SMYPHelper;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,7 @@ class RegisterController extends Controller
 
     public function getUsers()
     {
-        $users = User::where('user_type', 'user')->get();
+        $users = User::whereIn('user_type', ['parent', 'child', 'trainer', 'trainee', 'teacher', 'student'])->get();
 
         return view('admin.users', compact('users'));
     }
@@ -44,6 +45,8 @@ class RegisterController extends Controller
                 $userType = 'child';
             } elseif ($user->user_type === 'trainer') {
                 $userType = 'trainee';
+            } elseif ($user->user_type === 'teacher') {
+                $userType = 'student';
             } else {
                 // Invalid referring user type
                 return response()->json(['valid' => false]);
@@ -115,6 +118,8 @@ class RegisterController extends Controller
                     $userType = 'child';
                 } elseif ($referringUser->user_type === 'trainer') {
                     $userType = 'trainee';
+                }elseif ($referringUser->user_type === 'teacher') {
+                    $userType = 'student';
                 }
             } else {
                 // Invalid referral code, redirect back with an error message
@@ -146,7 +151,7 @@ class RegisterController extends Controller
             // Debug: Save the decoded data to a file to check if it's a valid image
             // $tempImagePath = storage_path('app/public/temp_image.png');
             // file_put_contents($tempImagePath, $binaryImageData);
-            $fileName =  'avatars/' .time() . '.png';
+            $fileName =  'avatars/' . time() . '.png';
             Storage::disk('public')->put($fileName, $binaryImageData);
 
             $user->avatar = $fileName;
