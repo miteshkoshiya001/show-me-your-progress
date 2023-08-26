@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories_translations', function (Blueprint $table) {
+        Schema::create('user_categories_translations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('user_categories')->onDelete('cascade');
             $table->string('name', 255);
             $table->string('locale')->index();
             $table->unique(['category_id', 'locale']);

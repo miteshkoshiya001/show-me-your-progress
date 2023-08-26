@@ -15,7 +15,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="content-header row">
+   {{--  <div class="content-header row">
     </div>
     <div class="content-body">
         <!-- Dashboard Analytics Start -->
@@ -164,39 +164,37 @@
                 <div class="col-lg-3 col-sm-6 col-12">
                     <div class="card">
                         <a href="{{ localized_route('categories', ['total_response' => 'total_response']) }}"
-                            class="text-body query-paramter"
-                            id="href-total-categories">
-                        <div class="card-header d-flex align-items-start pb-0">
-                            <div>
-                                <h2 class="text-bold-700 mb-0" id="total-categories">0</h2>
-                                <p>{{ __('messages.total_categories') }}</p>
-                            </div>
-                            <div class="avatar bg-rgba-warning p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-alert-octagon text-warning font-medium-5"></i>
+                            class="text-body query-paramter" id="href-total-categories">
+                            <div class="card-header d-flex align-items-start pb-0">
+                                <div>
+                                    <h2 class="text-bold-700 mb-0" id="total-categories">0</h2>
+                                    <p>{{ __('messages.total_categories') }}</p>
+                                </div>
+                                <div class="avatar bg-rgba-warning p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-alert-octagon text-warning font-medium-5"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12">
                     <div class="card">
                         <a href="{{ localized_route('users', ['total_response' => 'total_response', 'type' => 'delivery_person']) }}"
-                            class="text-body query-paramter"
-                            id="href-total-persons">
-                        <div class="card-header d-flex align-items-start pb-0">
-                            <div>
-                                <h2 class="text-bold-700 mb-0" id="total-delivery-persons">0</h2>
-                                <p>{{ __('messages.total_delivery_persons') }}</p>
-                            </div>
-                            <div class="avatar bg-rgba-primary p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-users text-primary font-medium-5"></i>
+                            class="text-body query-paramter" id="href-total-persons">
+                            <div class="card-header d-flex align-items-start pb-0">
+                                <div>
+                                    <h2 class="text-bold-700 mb-0" id="total-delivery-persons">0</h2>
+                                    <p>{{ __('messages.total_delivery_persons') }}</p>
+                                </div>
+                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-users text-primary font-medium-5"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12">
@@ -217,20 +215,19 @@
                 <div class="col-lg-3 col-sm-6 col-12">
                     <div class="card">
                         <a href="{{ localized_route('purchases', ['total_response' => 'total_response']) }}"
-                            class="text-body query-paramter"
-                            id="href-total-purchases">
-                        <div class="card-header d-flex align-items-start pb-0">
-                            <div>
-                                <h2 class="text-bold-700 mb-0">₹<span id="total-purchase"> 0 </span></h2>
-                                <p>{{ __('messages.total_purchase') }}</p>
-                            </div>
-                            <div class="avatar bg-rgba-warning p-50 m-0">
-                                <div class="avatar-content">
-                                    <i class="feather icon-dollar-sign text-warning font-medium-5"></i>
+                            class="text-body query-paramter" id="href-total-purchases">
+                            <div class="card-header d-flex align-items-start pb-0">
+                                <div>
+                                    <h2 class="text-bold-700 mb-0">₹<span id="total-purchase"> 0 </span></h2>
+                                    <p>{{ __('messages.total_purchase') }}</p>
+                                </div>
+                                <div class="avatar bg-rgba-warning p-50 m-0">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-dollar-sign text-warning font-medium-5"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -293,7 +290,7 @@
         </section>
         <!-- Dashboard Analytics end -->
 
-    </div>
+    </div> --}}
 @endsection
 
 @section('page-js')

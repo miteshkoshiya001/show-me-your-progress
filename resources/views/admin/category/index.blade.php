@@ -1,6 +1,6 @@
 @extends('layouts.admin.template')
 
-@section('title', __('messages.categories'))
+@section('title', __('messages.user_categories'))
 @section('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/data-list-view.css') }}">
 @endsection()
@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item"><a
                                     href="{{ localized_route('dashboard') }}">{{ __('messages.home') }}</a>
                             </li>
-                            <li class="breadcrumb-item active">{{ __('messages.categories') }}
+                            <li class="breadcrumb-item active">{{ __('messages.user_categories') }}
                             </li>
                         </ol>
                     </div>
@@ -32,8 +32,8 @@
                         <a href="{{ localized_route('create.category') }}"
                             class="btn btn-outline-primary text-primary">{{ __('messages.add_category') }}</a>
 
-                        <a href="{{ localized_route('sorting.category') }}"
-                            class="btn btn-outline-primary text-primary">{{ __('messages.Sorting_category') }}</a>
+                        {{-- <a href="{{ localized_route('sorting.category') }}"
+                            class="btn btn-outline-primary text-primary">{{ __('messages.Sorting_category') }}</a> --}}
                     </div>
                 </div>
             </div>
@@ -43,10 +43,10 @@
                     <thead>
                         <tr>
                             <th>{{ __('messages.sr_no') }}</th>
-                            <th>{{ __('messages.image') }}</th>
+                            {{-- <th>{{ __('messages.image') }}</th> --}}
                             <th>{{ __('messages.name') }}</th>
-                            <th>{{ __('messages.parent_category') }}</th>
-                            <th>{{ __('messages.is_important') }}</th>
+                            {{-- <th>{{ __('messages.parent_category') }}</th> --}}
+                            {{-- <th>{{ __('messages.is_important') }}</th> --}}
                             <th>{{ __('messages.status') }}</th>
                             <th>{{ __('messages.action') }}</th>
                         </tr>
@@ -55,12 +55,12 @@
                         @foreach ($categories as $key => $category)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td class="product-img"><img src="{{ $category->image_url }}" alt="Img placeholder">
-                                </td>
+                                {{-- <td class="product-img"><img src="{{ $category->image_url }}" alt="Img placeholder">
+                                </td> --}}
                                 <td class="product-name"> {{ !empty($category->name) ? $category->name : 'N/A' }} </td>
-                                <td class="product-name">
-                                    {{ !empty($category->parent_name) ? $category->parent_name : 'N/A' }} </td>
-                                <td>
+                                {{-- <td class="product-name">
+                                    {{ !empty($category->parent_name) ? $category->parent_name : 'N/A' }} </td> --}}
+                                {{-- <td>
                                     <div class="chip chip-{{ !empty($category->is_important) ? 'success' : 'danger' }}">
                                         <div class="chip-body">
                                             <div class="chip-text">
@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <div class="chip chip-{{ !empty($category->status) ? 'success' : 'danger' }}">
                                         <div class="chip-body">
@@ -87,9 +87,9 @@
                                             class="btn btn-outline-danger waves-effect waves-light action-delete"
                                             data-module="{{ get_class($category) }}" data-id="{{ $category->id }}"><i
                                                 class="feather icon-trash"></i></button>
-                                        <a href="{{ localized_route('product.sorting.list.category', $category->id) }}"
+                                        {{-- <a href="{{ localized_route('product.sorting.list.category', $category->id) }}"
                                             class="btn btn-outline-primary waves-effect waves-light"><i
-                                                class="feather icon-list"></i></a>
+                                                class="feather icon-list"></i></a> --}}
                                     </div>
                                 </td>
                             </tr>

@@ -1,7 +1,7 @@
 @php
-    
+
     use App\Helpers\Helper;
-    
+
 @endphp
 <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow">
     <div class="navbar-wrapper">
@@ -30,8 +30,8 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown-flag"><a class="dropdown-item"
                                 href="{{ url('admin/dashboard') }}" data-language="en"><i
                                     class="feather icon-globe"></i> English</a><a class="dropdown-item"
-                                href="{{ url('gu/admin/dashboard') }}" data-language="gu"><i
-                                    class="flag-icon flag-icon-in"></i> ગુજરાતી</a></div>
+                                href="{{ url('bg/admin/dashboard') }}" data-language="bg"><i
+                                    class="flag-icon flag-icon-bg"></i> Bulgarian</a></div>
                     </li>
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
                             href="#" data-toggle="dropdown">

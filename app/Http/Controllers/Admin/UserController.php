@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\Wallet;
 use App\Models\AppUser;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,30 +21,25 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = AppUser::orderBy('id', 'desc')->where(function ($query) use ($request) {
-            if ($request->has('today_date') && $request->get('today_date')) {
-                $currentDate = Carbon::now()->format('Y-m-d');
-                $query->whereDate('created_at', $currentDate)->where(['user_type' => config('constants.user_types.CUSTOMER')]);
-            }
-            
-            if ($request->has('start_date') && $request->get('start_date') && $request->has('end_date') && $request->get('end_date')) {
+        $userCategories = Category::all();
 
-                $query->whereDate('created_at', '>=', $request->get('start_date'))->whereDate('created_at', '<=', $request->get('end_date'));
-            } else if ($request->has('start_date') && $request->get('start_date') && $request->get('end_date') == '') {
+        $query = AppUser::orderBy('id', 'desc');
 
-                $query->whereDate('created_at', $request->get('start_date'));
-            }
-            if ($request->has('total_response') && $request->get('total_response') && $request->get('type') == '') {
+        if ($request->has('user_category_id')) {
+            $query->where('user_category_id', $request->input('user_category_id'));
+        }
 
-                $query->where(['user_type' => config('constants.user_types.CUSTOMER')]);
-            }
+        $users = $query->get();
 
-            if ($request->has('total_response') && $request->get('total_response') && $request->has('type') && $request->get('type')) {
-                $query->where(['user_type' => config('constants.user_types.DELIVERY_PERSON')]);
-            }
-        })->get();
-        return view('admin.users.index', compact('users'));
+        foreach ($users as $user) {
+            $userCategory = Category::find($user->user_category_id);
+            $user->user_category = $userCategory ? $userCategory->name : 'N/A';
+        }
+
+        return view('admin.users.index', compact('users', 'userCategories'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -85,7 +81,28 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            return response()->json([
+                'status' => true,
+                'message' => 'Found',
+                'data' => AppUser::findOrFail($id),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No record found',
+                'data' => [],
+            ]);
+        }
+        try {
+            $user = AppUser::findOrFail($id);
+            $userCategories = Category::all(); // Fetch all categories
+            return view('admin.users.edit', compact('user', 'userCategories'));
+        } catch (Exception $e) {
+            // Handle the error and redirect back with a message
+
+            return redirect()->route('admin.users.index')->with('error', 'User not found');
+        }
     }
 
     /**
@@ -93,7 +110,22 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $user = AppUser::findOrFail($id);
+            $request['status'] = !empty($request->status) ? 1 : 0;
+            $user->update($request->all());
+            return response()->json([
+                'status' => true,
+                'message' => 'User updated successfully',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => true,
+                'message' => $e->getMessage(),
+            ]);
+            // Handle the error and redirect back with a message
+            return redirect()->route('admin.users.index')->with('error', $ex->getMessage());
+        }
     }
 
     /**
@@ -101,66 +133,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
-
-    public function walletHistory(String $id)
-    {
         try {
-            $wallet = Wallet::where(['user_id' => $id])->first();
-            $walletHistories = WalletHistory::where(['user_id' => $id])->orderBy('created_at', 'DESC')->get();
-            $result['status'] = true;
-            $result['message'] = __('messages.wallet_history');
-            $result['data'] = ['content' => view('admin.users.wallet-history', compact('walletHistories', 'wallet', 'id'))->render()];
-        } catch (\Exception $exception) {
-            $result['message'] = $exception->getMessage();
-        }
-        return response()->json($result);
-    }
-
-    public function updateWallet(request $request)
-    {
-        try {
-
-            $validator = Validator::make($request->all(), [
-                'amount' => 'required|numeric',
-                'userWalletId' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['status' => false, 'message' => $validator->errors()->first(), 'data' => []]);
-            }
-
-            $wallet = Wallet::where(['id' => $request->walletId])->first();
-            if (!empty($wallet)) {
-                $wallet->amount = $wallet->amount + $request->amount;
-                $wallet->save();
-            } else {
-                $wallet = new Wallet();
-                $wallet->amount = $request->amount;
-                $wallet->user_id = $request->userWalletId;
-                $wallet->save();
-            }
-
-            if ($request->amount < 0) {
-                $type = 'debit';
-            } else {
-                $type = 'credit';
-                // $type = 'credit';
-            }
-
-            WalletHistory::create([
-                "user_id" => $request->userWalletId,
-                "amount" => $request->amount,
-                "type" => $type,
-                "order_id" => 0
-            ]);
-            return response()->json(['status' => true, 'message' => __('messages.wallet_amount_has_been_updated_successfully'), 'data' => []]);
-        } catch (QueryException $exception) {
-            return response()->json(['status' => false, 'message' => __('messages.something_went_wrong'), 'data' => []]);
-        } catch (ModelNotFoundException $exception) {
-            return response()->json(['status' => false, 'message' => $exception->getMessage(), 'data' => []]);
-        } catch (\Exception $exception) {
-            return response()->json(['status' => false, 'message' => $exception->getMessage(), 'data' => []]);
+            $user = AppUser::findOrFail($id);
+            $user->delete();
+            return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
+        } catch (Exception $e) {
+            // Handle the error and redirect back with a message
+            return redirect()->route('admin.users.index')->with('error', 'Failed to delete user');
         }
     }
 }

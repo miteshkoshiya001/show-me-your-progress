@@ -26,18 +26,17 @@ class CategoryRequest extends MinimallRequest
         $rules = RuleFactory::make([
             '%name%' => 'required|string',
         ]);
-        if (request()->id == 0 && request()->has('image') == false) {
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg|max:2048';
-        }
+        // if (request()->id == 0 && request()->has('image') == false) {
+        //     $rules['image'] = 'required|image|mimes:jpeg,png,jpg|max:2048';
+        // }
         return $rules;
     }
 
     public function attributes()
     {
         return [
-            'en.name' => 'name (EN)',            
-            'gu.name' => 'name (GU)',            
-            'image' => 'image',            
+            'en.name' => 'name (EN)',
+            'bg.name' => 'name (BG)',
         ];
     }
 
@@ -46,9 +45,6 @@ class CategoryRequest extends MinimallRequest
         $messages = [
             'required' => 'Category :attribute is required.',
         ];
-        if (request()->id == 0 && request()->has('image') == false) {
-            $messages['image.required'] = 'Category :attribute is required.';
-        }
         return $messages;
     }
 }

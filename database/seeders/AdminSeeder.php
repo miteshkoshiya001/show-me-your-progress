@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminEmail = 'admin@minimall.store';
+        $adminEmail = 'admin@showmeyourprogress.com';
         $user = User::where('email', '=', $adminEmail)->first();
         if ($user === null) {
             // user doesn't exist

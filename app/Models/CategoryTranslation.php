@@ -10,7 +10,7 @@ class CategoryTranslation extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'categories_translations';
+    protected $table = 'user_categories_translations';
     protected $fillable = [
         'parent_id',
         'locale',

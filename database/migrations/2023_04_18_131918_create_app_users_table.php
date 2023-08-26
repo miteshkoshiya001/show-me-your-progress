@@ -13,14 +13,20 @@ return new class extends Migration
     {
         Schema::create('app_users', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->nullable();
-            $table->string('phone', 20)->nullable();
-            $table->string('email', 255)->nullable();
-            $table->tinyInteger('status')->default(0)->comment('0 = inactive, 1 = active, 2 = deleted');
-            $table->string('api_token', 255)->nullable();
-            $table->string('avatar', 255)->nullable();
-            $table->string('password', 255)->nullable();
-            $table->string('language', 2)->default('en')->nullable()->comment('en = english, gu = gujrati');
+            $table->string('avatar')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('username')->unique();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone')->nullable()->unique();
+            $table->unsignedBigInteger('user_category_id')->nullable();
+            $table->string('referral_code')->unique();
+            $table->string('password');
+            $table->tinyInteger('status')->default(1)->comment('0 = Inactive, 1 = Active, 2=Deleted');
+            $table->tinyInteger('notification_status')->default(1)->comment('0 = off, 1 = on');
+            $table->string('api_token', 80)->unique()->nullable();
+            $table->unsignedBigInteger('parent_id')->default(0);
+            $table->string('language')->default('en');
             $table->timestamps();
             $table->softDeletes();
         });

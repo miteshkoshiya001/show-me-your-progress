@@ -12,7 +12,7 @@
                                     href="{{ localized_route('dashboard') }}">{{ __('messages.home') }}</a>
                             </li>
                             <li class="breadcrumb-item"><a
-                                    href="{{ localized_route('categories') }}">{{ __('messages.categories') }}</a>
+                                    href="{{ localized_route('categories') }}">{{ __('messages.user_categories') }}</a>
                             </li>
                             <li class="breadcrumb-item active"> {{ $title }}
                             </li>
@@ -51,7 +51,7 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                            <div class="col-lg-6 col-md-12">
+                                            {{-- <div class="col-lg-6 col-md-12">
                                                 <fieldset class="form-group">
                                                     <label for="inputGroupFile01">{{ __('messages.upload_image') }}</label>
                                                     <div class="custom-file">
@@ -93,7 +93,7 @@
                                                     <input type="color" id="color" class="form-control" name="color"
                                                         value="{{ !empty($category->color) ? $category->color : '#ffffff' }}">
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-lg-2 col-md-2">
                                                 <fieldset class="form-group">
                                                     <div
@@ -112,7 +112,7 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                            <div class="col-lg-2 col-md-2">
+                                            {{-- <div class="col-lg-2 col-md-2">
                                                 <fieldset class="form-group">
                                                     <div
                                                         class="custom-control custom-switch switch-lg custom-switch-success mr-2 mb-1">
@@ -129,7 +129,7 @@
                                                         </label>
                                                     </div>
                                                 </fieldset>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-12">
                                                 <button type="submit"
                                                     class="btn btn-primary mr-1 mb-1">{{ __('messages.submit') }}</button>

@@ -59,29 +59,14 @@ class CategoryController extends Controller
             $request->validated();
             if (!empty($request->id)) {
                 $category = Category::find($request->id);
-                $pathImage = 'public/categories/' . $request->id . '/' . $category->image;
                 $category->update($request->all());
                 $message  =  __('messages.category_updated_successfully');
-                $categoryId = $request->id;
-                $fileName = $category->image;
                 $category->status = ($request->status ?? 0);
-                $category->is_important = ($request->is_important ?? 0);
+                // $category->is_important = ($request->is_important ?? 0);
             } else {
                 $category = Category::create($request->all());
-                $fileName = null;
                 $message  =  __('messages.category_created_successfully');
-                $categoryId = $category->id;
             }
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $path = 'categories/' . $categoryId;
-                $fileName = Helper::storeImage($file, $path);
-
-                if (!empty($request->id) && !empty($fileName)) {
-                    Helper::removeImage($pathImage);
-                }
-            }
-            $category->image = $fileName;
             $category->save();
             return redirect()->to(localized_route('categories'))->with('success', $message);
         } catch (ModelNotFoundException $exception) {

@@ -17,7 +17,7 @@
                                     href="{{ localized_route('dashboard') }}">{{ __('messages.home') }}</a>
                             </li>
                             <li class="breadcrumb-item"><a
-                                    href="{{ localized_route('categories') }}">{{ __('messages.categories') }}</a>
+                                    href="{{ localized_route('categories') }}">{{ __('messages.user_categories') }}</a>
                             </li>
                             <li class="breadcrumb-item active">{{ __('messages.Sorting_category') }}
                             </li>

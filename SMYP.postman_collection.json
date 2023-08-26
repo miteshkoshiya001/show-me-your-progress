@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "9a587ae1-dd35-461d-adfc-32fd94933a87",
+		"name": "SMYP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29240128"
+	},
+	"item": [
+		{
+			"name": "user-categories",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "locale",
+						"value": "bg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{local}}user-categories/list/",
+					"host": [
+						"{{local}}user-categories"
+					],
+					"path": [
+						"list",
+						""
+					]
+				},
+				"description": "| **Key** | **Value** |\n| --- | --- |\n| locale | bg or en |\n\nLocale:  \nen = english (Default)\n\nbg = bulgarian"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "locale",
+						"value": "bg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "jenish",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "khunt",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "2525265253",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "jenissh1s",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "jenisaassh23@mailinator.com",
+							"type": "text"
+						},
+						{
+							"key": "user_category_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/C:/wamp64/www/projects/fitness-app/storage/app/public/avatars/1692790210.png"
+						},
+						{
+							"key": "referral_code",
+							"value": "ICF792",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "language",
+							"value": "bg",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{local}}app-register",
+					"host": [
+						"{{local}}app-register"
+					]
+				},
+				"description": "Example Request :\n\n| **Key** | **Value** |\n| --- | --- |\n| first_name | john |\n| last_name | Doe |\n| phone | 1234567890 |\n| username | john |\n| email | [johndoe@mailinator.com](https://mailto:johndoe@mailinator.com) |\n| user_category_id | 1 |\n| password | 12345678 |\n| avatar | image |\n\nJSON :  \n{   \n\n \"first_name\": \"jon\", \n\n   \"last_name\": \"doe\",  \n\n  \"username\" : \"john\",  \n\n  \"phone\":\"1234567890\",   \n\n \"email\": \"johndoe@mailinator.com\", \n\n   \"user_category_id\": 1,  \n\n  \"password\": \"12345678\"\n\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "locale",
+						"value": "bg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"jenish\",\r\n    \"password\": \"12345678\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}app-login",
+					"host": [
+						"{{local}}app-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change-password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "GgqLwTtKnpX2W1sJiMy5ax4wLWmUdzOvCEwhbKQVK3cc1Eb92IJuBkGoI3iZ3foTsTyBIO28m9N1CoiY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "current_password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "new_password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{local}}change-password",
+					"host": [
+						"{{local}}change-password"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": "smyp.test/api/",
+			"type": "string"
+		}
+	]
+}

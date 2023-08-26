@@ -50,8 +50,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::multilingual('', [UserController::class, 'index'])->names(Helper::getMultiLangRoute('users'));
         Route::multilingual('/{id}', [UserController::class, 'show'])->names(Helper::getMultiLangRoute('users.show'));
-        Route::multilingual('wallet-history/{id}', [UserController::class, 'walletHistory'])->names(Helper::getMultiLangRoute('wallet.history'));
-        Route::multilingual('wallet/update', [UserController::class, 'updateWallet'])->method("post")->names(Helper::getMultiLangRoute('update.wallet'));
+        Route::multilingual('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::multilingual('/{id}', [UserController::class, 'update'])->name('users.update')->method('post');
+        Route::multilingual('/{id}', [UserController::class, 'destroy'])->name('users.destroy')->method('delete');
     });
 
 

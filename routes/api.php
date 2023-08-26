@@ -30,22 +30,21 @@ Route::post('app-login', [AuthController::class, 'login']);
 Route::get('cms', [SettingController::class, 'index']);
 Route::get('total-user-coupons-order', [AuthController::class, 'countUserDeliveredOrderCoupon']);
 
-
+Route::group(['prefix' => 'user-categories'], function () {
+    Route::get('list', [CategoryController::class, 'index']);
+});
 Route::group(['middleware' => 'valid.token'], function () {
-    Route::post('change-password/{id}', [AuthController::class, 'changePassword']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
     Route::get('trending-offers', [TrendingOfferController::class, 'index']);
     Route::get('trending-offers/get-pop-up', [TrendingOfferController::class, 'getPopUp']);
     Route::post('user/language/update', [AuthController::class, 'userLanguageUpdate']);
     Route::post('edit/profile', [AuthController::class, 'update']);
     Route::get('wallet-history', [AuthController::class, 'walletHistory']);
-    
+
     // Category routes
-    Route::group(['prefix' => 'category'], function () {
-        Route::get('list', [CategoryController::class, 'index']);
-    });
-    
+
     Route::get('check-delivery-status', [TrendingOfferController::class, 'index']);
-    
+
     //  Delivery address routes
     Route::get('check-delivery-status', [DeliveryAddressController::class, 'checkDeliveryStatus']);
     Route::group(['prefix' => 'delivery-address'], function () {
@@ -55,7 +54,7 @@ Route::group(['middleware' => 'valid.token'], function () {
         Route::delete('delete/{id}', [DeliveryAddressController::class, 'destroy']);
         Route::post('mark-as-primary/{id}', [DeliveryAddressController::class, 'markAsPrimary']);
     });
-    
+
     Route::group(['prefix' => 'product'], function(){
         Route::get('list', [ProductController::class, 'index']);
         Route::get('detail/{id}', [ProductController::class, 'detail']);
@@ -75,7 +74,7 @@ Route::group(['middleware' => 'valid.token'], function () {
         Route::get('orders', [OrderController::class, 'deliveryPersonOrders']);
     });
     Route::get('mark-or-as-delivered', [OrderController::class, 'markOrAsDelivered']);
-    
+
     // Coupon route
     Route::get('my-coupons', [OrderController::class, 'myCoupons']);
     Route::post('coupon/mark-scratched/{id}', [OrderController::class, 'couponMarkScratched']);

@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +21,7 @@ class Helper
     }
 
     public static function siteLocale()
-    {        
+    {
         $locale = request()->locale ?? request()->segment(1);
         $locale = in_array($locale, self::getLocales()) ? $locale : "en";
         return $locale;
@@ -28,23 +30,23 @@ class Helper
     public static function getLocales() {
         return Config::get('translatable.locales', []);
     }
-    
+
     public static function storeImage($file = null, $path = '') {
         if ($file == null) {
             return null;
         }
         $fileName = time().'-'.$file->getClientOriginalName();
         Storage::disk('public')->putFileAs($path,$file,$fileName);
-        \Log::info(['store' => $path]);
+        Log::info(['store' => $path]);
         return $fileName;
     }
-   
+
     public static function removeImage($path = '') {
         if ($path == null) {
             return null;
         }
         if (Storage::exists($path)) {
-            \Log::info("Storage::exists");
+            Log::info("Storage::exists");
             Storage::delete($path);
             return true;
         }

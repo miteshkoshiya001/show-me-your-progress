@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('user_categories', function (Blueprint $table) {
             $table->id();
-            $table->integer('parent_id')->default(0);
-            $table->string('color', 255)->nullable();
-            $table->string('image', 255)->nullable();
             $table->tinyInteger('status')->default(0)->comment('0 = inactive, 1 = active, 2 = deleted');
-            $table->tinyInteger('is_important')->default(0)->comment('0 = no, 1 = yes');
+            // $table->tinyInteger('is_important')->default(0)->comment('0 = no, 1 = yes');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,26 +19,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'search' => 'nullable|min:3',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'code' => Response::HTTP_BAD_REQUEST,
-                    'status' => false,
-                    'message' => $validator->errors()->all(),
-                ]);
-            }
-            $categories = Category::active()->where(function ($query) use ($request) {
-                if ($request->has('search') && $request->get('search')) {
-                    $search = $request->get('search');
-                    $query->whereHas('translations', function ($subQuery) use ($search) {
-                        $subQuery->where('name', 'like', "%$search%");
-                    });
-                }else{
-                    $query->where('parent_id', 0);
-                }
-            })->orderBy('sorting', 'ASC')->get();
+            $categories = Category::where('status',1)->orderBy('id', 'ASC')->get();
             return response()->json([
                 'code' => Response::HTTP_OK,
                 'status' => true,
