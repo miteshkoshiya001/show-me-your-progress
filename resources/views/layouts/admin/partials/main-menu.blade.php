@@ -40,6 +40,14 @@
                 <a href="{{ localized_route('categories') }}"><i class="feather icon-list"></i><span class="menu-title"
                         data-i18n="Categories">{{ __('messages.user_categories') }}</span></a>
             </li>
+            <li class="nav-item {{ Helper::isActiveUrl('Sticker Category') }}">
+                <a href="{{ localized_route('sticker-categories') }}"><i class="feather icon-list"></i><span class="menu-title"
+                        data-i18n="StickerCategories">{{ __('messages.sticker_category') }}</span></a>
+            </li>
+            <li class="nav-item {{ Helper::isActiveUrl('Sticker Collection') }}">
+                <a href="{{ localized_route('sticker-collection.index') }}"><i class="feather icon-list"></i><span class="menu-title"
+                        data-i18n="StickerCollections">{{ __('messages.sticker_collection') }}</span></a>
+            </li>
             {{-- <li class="nav-item {{ Helper::isActiveUrl('units-of-measurement') }}">
                 <a href="{{ localized_route('uoms') }}"><i class="feather icon-grid"></i><span
                         class="menu-title"

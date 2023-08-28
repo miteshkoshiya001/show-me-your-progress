@@ -53,28 +53,28 @@ class CategoryController extends Controller
         return view('admin.category.create', compact('category', 'translations', 'title', 'categories'));
     }
 
-    public function store(CategoryRequest $request)
-    {
-        try {
-            $request->validated();
-            if (!empty($request->id)) {
-                $category = Category::find($request->id);
-                $category->update($request->all());
-                $message  =  __('messages.category_updated_successfully');
-                $category->status = ($request->status ?? 0);
-                // $category->is_important = ($request->is_important ?? 0);
-            } else {
-                $category = Category::create($request->all());
-                $message  =  __('messages.category_created_successfully');
+        public function store(CategoryRequest $request)
+        {
+            try {
+                $request->validated();
+                if (!empty($request->id)) {
+                    $category = Category::find($request->id);
+                    $category->update($request->all());
+                    $message  =  __('messages.category_updated_successfully');
+                    $category->status = ($request->status ?? 0);
+                    // $category->is_important = ($request->is_important ?? 0);
+                } else {
+                    $category = Category::create($request->all());
+                    $message  =  __('messages.category_created_successfully');
+                }
+                $category->save();
+                return redirect()->to(localized_route('categories'))->with('success', $message);
+            } catch (ModelNotFoundException $exception) {
+                return back()->with('error', $exception->getMessage());
+            } catch (Exception $exception) {
+                return back()->with('error', $exception->getMessage());
             }
-            $category->save();
-            return redirect()->to(localized_route('categories'))->with('success', $message);
-        } catch (ModelNotFoundException $exception) {
-            return back()->with('error', $exception->getMessage());
-        } catch (Exception $exception) {
-            return back()->with('error', $exception->getMessage());
         }
-    }
 
     public function updateSorting(Request $request)
     {

@@ -42,8 +42,8 @@
                                     height="40" width="40"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i>
-                                Edit Profile</a>
+                            <a class="dropdown-item" href="{{ localized_route('admin.profile') }}"><i class="feather icon-lock"></i>
+                                Change password</a>
                             <div class="dropdown-divider"></div>
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">

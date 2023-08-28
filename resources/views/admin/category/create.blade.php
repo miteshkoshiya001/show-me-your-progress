@@ -94,25 +94,25 @@
                                                         value="{{ !empty($category->color) ? $category->color : '#ffffff' }}">
                                                 </div>
                                             </div> --}}
-                                            <div class="col-lg-2 col-md-2">
-                                                <fieldset class="form-group">
-                                                    <div
-                                                        class="custom-control custom-switch switch-lg custom-switch-success mr-2 mb-1">
-                                                        <p class="mb-0">{{ __('messages.status') }} </p>
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitchStatus" name="status"
-                                                            value="1"
-                                                            {{ old('status', $category->status ?? 1) == 1 ? 'checked' : '' }}>
-                                                        <label class="custom-control-label" for="customSwitchStatus">
-                                                            <span class="switch-text-left">{{ __('messages.active') }}
-                                                            </span>
-                                                            <span class="switch-text-right">{{ __('messages.inactive') }}
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            {{-- <div class="col-lg-2 col-md-2">
+                                                <div class="col-lg-2 col-md-2">
+                                                    <fieldset class="form-group">
+                                                        <div
+                                                            class="custom-control custom-switch switch-lg custom-switch-success mr-2 mb-1">
+                                                            <p class="mb-0">{{ __('messages.status') }} </p>
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customSwitchStatus" name="status"
+                                                                value="1"
+                                                                {{ old('status', $category->status ?? 1) == 1 ? 'checked' : '' }}>
+                                                            <label class="custom-control-label" for="customSwitchStatus">
+                                                                <span class="switch-text-left">{{ __('messages.active') }}
+                                                                </span>
+                                                                <span class="switch-text-right">{{ __('messages.inactive') }}
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                {{-- <div class="col-lg-2 col-md-2">
                                                 <fieldset class="form-group">
                                                     <div
                                                         class="custom-control custom-switch switch-lg custom-switch-success mr-2 mb-1">

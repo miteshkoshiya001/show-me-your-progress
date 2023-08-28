@@ -80,10 +80,12 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                 aria-label="Basic example">
-                                                                <button data-id=""
+                                                                <button data-id="{{ $user->id }}"
                                                                     data-geturl="{{ localized_route('users.edit', $user->id) }}"
-                                                                    class="editUser btn-outline-primary waves-effect waves-light btn border-right-0"><i
-                                                                        class="feather icon-edit"></i></button>
+                                                                    class="editUser btn-outline-primary waves-effect waves-light btn border-right-0">
+                                                                    <i class="feather icon-edit"></i>
+                                                                </button>
+
                                                                 <button type="button"
                                                                     class="btn btn-outline-danger waves-effect waves-light action-delete"
                                                                     data-module="{{ get_class($user) }}"
@@ -115,6 +117,7 @@
                         <div class="data-items pb-3 ps ps--active-y">
                             <div class="data-fields px-2 mt-3">
                                 <form id="saveUserForm">
+                                    <input type="hidden" name="user_id" id="data-id" value="">
                                     <div class="row">
                                         <div class="col-sm-12 data-field-col">
                                             <label for="data-firstname">{{ __('messages.first_name') }}</label>
@@ -154,8 +157,8 @@
                                         </div>
                                         <div class="col-sm-12 data-field-col">
                                             <label for="data-language">{{ __('messages.language') }}</label>
-                                            <input type="text" name="language" class="form-control" id="data-language"
-                                                value="{{ $user->language }}">
+                                            <input type="text" name="language" class="form-control"
+                                                id="data-language" value="{{ $user->language }}">
                                         </div>
                                         <div class="col-lg-2 col-md-2 data-field-col">
                                             <fieldset class="form-group">
@@ -181,7 +184,7 @@
                         <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                             <div class="add-data-btn">
                                 <button class="btn btn-primary mb-1" type="button" id="saveUser"
-                                    data-url="{{ localized_route('users.update', $user->id) }}">
+                                    data-url="{{ localized_route('users.update', '') }}">
                                     {{ __('messages.save') }}
                                 </button>
                             </div>
@@ -213,22 +216,27 @@
             $(document).ready(function() {
 
                 $("#saveUser").on("click", function() {
-                    // alert($(this).data('url'));
-                    // console.log($(this));
+                    console.log("Save button clicked.");
                     var btn = $(this);
-                    console.log($("#saveUserForm").serialize());
+                    var userId = $("#data-id").val();
+                    var dataUrl = btn.data('url') + '/' + userId;
+                    // var dataUrl = btn.data('url');
+                    // console.log("data-url:", dataUrl);
+                    var form = btn.closest('.add-new-data').find('#saveUserForm');
+
                     setLoadingBtn(btn);
+
                     $.ajax({
-                        url: $(this).data('url'),
+                        url: dataUrl,
                         type: "POST",
-                        data: $("#saveUserForm").serialize(),
+                        data: form.serialize(),
                         success: function(result) {
                             resetLoadingBtn(btn);
                             if (result.status) {
                                 successShow(result.message);
                                 $(".hide-data-sidebar").click();
                                 setTimeout(() => {
-                                    // location.reload();
+                                    location.reload();
                                 }, 2000);
                             } else {
                                 errorShow(result.message);
@@ -251,6 +259,7 @@
                     $(".add-new-data").addClass("show");
                     $(".overlay-bg").addClass("show");
                     var getUrl = $(this).data('geturl');
+
                     $.ajax({
                         url: getUrl,
                         type: "GET",
@@ -258,6 +267,7 @@
                         success: function(result) {
                             if (result.status) {
                                 // Populate form fields
+                                $("#data-id").val(result.data.id);
                                 $("#data-firstname").val(result.data.first_name);
                                 $("#data-lastname").val(result.data.last_name);
                                 $("#data-username").val(result.data.username);

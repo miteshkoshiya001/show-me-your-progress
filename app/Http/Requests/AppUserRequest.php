@@ -20,13 +20,20 @@ class AppUserRequest extends MinimallRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
+    public function messages(): array
+    {
+        return [
+            'username.regex' => 'Special symbols are not allowed in username except underscore, dots',
+            // You can add other custom error messages here if needed
+        ];
+    }
     public function rules(): array
     {
         if (!empty(request()->get('authUserId'))) {
             return [
                 'first_name' => 'required|max:255',
                 'last_name' => 'required|max:255',
-                'username' => 'required|unique:app_users,username,' . request()->get('authUserId') . ',id',
+                'username' => 'required|string|unique:app_users|regex:/^[0-9a-zA-Z_.]+$/,' . request()->get('authUserId') . ',id',
                 'email' => 'sometimes|email|unique:app_users,email,' . request()->get('authUserId') . ',id',
                 'phone' => 'sometimes|digits:10|unique:app_users,phone,'  . request()->get('authUserId') . ',id',
                 'user_category_id' => 'sometimes|numeric', // Adjust this rule as needed
@@ -41,7 +48,7 @@ class AppUserRequest extends MinimallRequest
             'last_name' => 'required|max:255',
             'phone' => 'sometimes|digits:10|unique:app_users,phone',
             'email' => 'sometimes|email|unique:app_users,email',
-            'username' => 'required|unique:app_users,username,',
+            'username' => 'required|string|unique:app_users|regex:/^[0-9a-zA-Z_.]+$/',
             'user_category_id' => 'sometimes', // Adjust this rule as needed
             'referral_code' => 'sometimes|string',
             'password' => 'required|min:8', // Adjust the rule for password as needed

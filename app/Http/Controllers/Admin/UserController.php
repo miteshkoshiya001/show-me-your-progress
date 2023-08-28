@@ -124,22 +124,12 @@ class UserController extends Controller
                 'message' => $e->getMessage(),
             ]);
             // Handle the error and redirect back with a message
-            return redirect()->route('admin.users.index')->with('error', $ex->getMessage());
+            return redirect()->route('admin.users.index')->with('error', $e->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        try {
-            $user = AppUser::findOrFail($id);
-            $user->delete();
-            return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
-        } catch (Exception $e) {
-            // Handle the error and redirect back with a message
-            return redirect()->route('admin.users.index')->with('error', 'Failed to delete user');
-        }
-    }
+
 }

@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TendingOffer;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UOMController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -20,7 +20,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CommonActionController;
 use App\Http\Controllers\Admin\TrendingOfferController;
 use App\Http\Controllers\Admin\DeliveryAddressController;
+use App\Http\Controllers\admin\StickerCategoryController;
 use App\Http\Controllers\Admin\AvailableZipcodeController;
+use App\Http\Controllers\admin\StickerCollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,11 +53,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::multilingual('', [UserController::class, 'index'])->names(Helper::getMultiLangRoute('users'));
         Route::multilingual('/{id}', [UserController::class, 'show'])->names(Helper::getMultiLangRoute('users.show'));
         Route::multilingual('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-        Route::multilingual('/{id}', [UserController::class, 'update'])->name('users.update')->method('post');
-        Route::multilingual('/{id}', [UserController::class, 'destroy'])->name('users.destroy')->method('delete');
+        Route::multilingual('/{id}', [UserController::class, 'update'])->name('users.update')->method('POST');
+        // Route::multilingual('/{id}', [UserController::class, 'destroy'])->name('users.destroy')->method('delete');
     });
 
+    // profile
+    Route::group(['prefix' => 'profile'], function () {
+        Route::multilingual('', [ProfileController::class, 'index'])->names(Helper::getMultiLangRoute('admin.profile'));
+        Route::post('change-password', [ProfileController::class, 'ChangePassword'])->name('admin.profile.changePassword');
 
+        // Route::multilingual('/{id}', [UserController::class, 'destroy'])->name('users.destroy')->method('delete');
+    });
     // Category routes
     Route::group(['prefix' => 'category'], function () {
         Route::multilingual('', [CategoryController::class, 'index'])->names(Helper::getMultiLangRoute('categories'));
@@ -68,7 +76,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::multilingual('sorting/list/{id}', [CategoryController::class, 'productSortingList'])->names(Helper::getMultiLangRoute('product.sorting.list.category'));
     });
 
+    Route::group(['prefix' => 'sticker-category'], function () {
+        Route::multilingual('', [StickerCategoryController::class, 'index'])->names(Helper::getMultiLangRoute('sticker-categories'));
+        Route::multilingual('create', [StickerCategoryController::class, 'create'])->names(Helper::getMultiLangRoute('create.sticker-category'));
+        Route::multilingual('edit/{id}', [StickerCategoryController::class, 'edit'])->names(Helper::getMultiLangRoute('edit.sticker-category'));
+        Route::multilingual('store', [StickerCategoryController::class, 'store'])->method('post')->names(Helper::getMultiLangRoute('store.sticker-category'));
+        Route::multilingual('{id}', [StickerCategoryController::class, 'update'])->method('put')->names(Helper::getMultiLangRoute('update.sticker-category'));
+        Route::multilingual('{id}', [StickerCategoryController::class, 'destroy'])->names(Helper::getMultiLangRoute('delete.sticker-category'));
+    });
 
+    Route::group(['prefix' => 'sticker-collection'], function () {
+        Route::multilingual('', [StickerCollectionController::class, 'index'])->names(Helper::getMultiLangRoute('sticker-collection.index'));
+        Route::multilingual('create', [StickerCollectionController::class, 'create'])->names(Helper::getMultiLangRoute('sticker-collection.create'));
+        Route::multilingual('edit/{id}', [StickerCollectionController::class, 'edit'])->names(Helper::getMultiLangRoute('sticker-collection.edit'));
+        Route::multilingual('store', [StickerCollectionController::class, 'store'])->method('post')->names(Helper::getMultiLangRoute('sticker-collection.store'));
+        Route::multilingual('{id}', [StickerCollectionController::class, 'update'])->method('put')->names(Helper::getMultiLangRoute('sticker-collection.update'));
+        Route::multilingual('{id}', [StickerCollectionController::class, 'destroy'])->names(Helper::getMultiLangRoute('sticker-collection.destroy'));
+    });
     // Product routes
     Route::group(['prefix' => 'product'], function () {
         Route::multilingual('', [ProductController::class, 'index'])->names(Helper::getMultiLangRoute('products'));
