@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AppUserRequest;
 use App\Http\Resources\AppUserResource;
@@ -26,11 +27,16 @@ class AuthController extends Controller
      */
     public function store(AppUserRequest $request)
     {
+        // dd($request->all());
         try {
             // Check if the user already exists
-            $appUser = AppUser::where('username', $request->get('username'))
-                ->orWhere('email', $request->get('email'))
+            $appUser = AppUser::whereNotNull('username')
+                ->where(function ($query) use ($request) {
+                    $query->where('username', $request->get('username'))
+                        ->orWhere('email', $request->get('email'));
+                })
                 ->first();
+
 
             if (!empty($appUser)) {
                 return response()->json([
@@ -171,7 +177,39 @@ class AuthController extends Controller
             ]);
         }
     }
-
+    public function getParentMembers(Request $request)
+    {
+        try {
+            $parentUserId = $request->authUserId; // Get the ID of the user from the token
+            // dd($parentUserId);
+            $parentMembers = AppUser::where('parent_id', $parentUserId)->get();
+            // dd($parentMembers);
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'status' => true,
+                'message' => __('messages.parent_members_list'),
+                'data' => AppUserResource::collection($parentMembers)
+            ]);
+        } catch (QueryException $ex) {
+            return response()->json([
+                'code' => Response::HTTP_BAD_REQUEST,
+                'status' => false,
+                'message' => __('messages.something_went_wrong'),
+            ]);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'code' => Response::HTTP_BAD_REQUEST,
+                'status' => false,
+                'message' => __('messages.no_record_found'),
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'code' => Response::HTTP_BAD_REQUEST,
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
     //     // Other methods remain unchanged
 
     //     /**

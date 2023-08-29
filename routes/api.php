@@ -5,10 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\TrendingOfferController;
 use App\Http\Controllers\API\DeliveryAddressController;
-use App\Http\Controllers\API\SettingController;
+use App\Http\Controllers\API\StickerCategoryController;
+use App\Http\Controllers\api\StickerCollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +29,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Register user
 Route::post('app-register', [AuthController::class, 'store'])->name('user.register');
 Route::post('app-login', [AuthController::class, 'login']);
+
 Route::get('cms', [SettingController::class, 'index']);
 Route::get('total-user-coupons-order', [AuthController::class, 'countUserDeliveredOrderCoupon']);
 
 Route::group(['prefix' => 'user-categories'], function () {
     Route::get('list', [CategoryController::class, 'index']);
 });
+Route::group(['prefix' => 'sticker'], function () {
+    Route::get('categories-list', [StickerCategoryController::class, 'index']);
+    Route::get('collections-list', [StickerCollectionController::class, 'index']);
+});
 Route::group(['middleware' => 'valid.token'], function () {
+    Route::get('my-members', [AuthController::class, 'getParentMembers']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
     Route::get('trending-offers', [TrendingOfferController::class, 'index']);
     Route::get('trending-offers/get-pop-up', [TrendingOfferController::class, 'getPopUp']);
@@ -55,13 +63,12 @@ Route::group(['middleware' => 'valid.token'], function () {
         Route::post('mark-as-primary/{id}', [DeliveryAddressController::class, 'markAsPrimary']);
     });
 
-    Route::group(['prefix' => 'product'], function(){
+    Route::group(['prefix' => 'product'], function () {
         Route::get('list', [ProductController::class, 'index']);
         Route::get('detail/{id}', [ProductController::class, 'detail']);
         Route::post('add-to-wishlist/{id}', [ProductController::class, 'addToWishlist']);
         Route::post('remove-from-wishlist/{id}', [ProductController::class, 'removeFromWishlist']);
         Route::get('wishlist', [ProductController::class, 'wishlist']);
-
     });
 
     Route::group(['prefix' => 'order'], function () {
@@ -70,7 +77,7 @@ Route::group(['middleware' => 'valid.token'], function () {
         Route::delete('delete/{id}', [OrderController::class, 'destroy']);
     });
 
-    Route::group(['prefix' => 'delivery/person'], function(){
+    Route::group(['prefix' => 'delivery/person'], function () {
         Route::get('orders', [OrderController::class, 'deliveryPersonOrders']);
     });
     Route::get('mark-or-as-delivered', [OrderController::class, 'markOrAsDelivered']);

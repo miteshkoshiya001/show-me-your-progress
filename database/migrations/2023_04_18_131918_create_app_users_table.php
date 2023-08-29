@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('avatar')->nullable();
             $table->string('email')->unique()->nullable();
-            $table->string('username')->unique();
+            $table->string('username')->unique()->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone')->nullable()->unique();
             $table->unsignedBigInteger('user_category_id')->nullable();
             $table->string('referral_code')->unique();
             $table->string('password');
+            $table->tinyInteger('is_google_login')->default(0)->comment('0 = no, 1 = yes');
             $table->tinyInteger('status')->default(1)->comment('0 = Inactive, 1 = Active, 2=Deleted');
             $table->tinyInteger('notification_status')->default(1)->comment('0 = off, 1 = on');
             $table->string('api_token', 80)->unique()->nullable();

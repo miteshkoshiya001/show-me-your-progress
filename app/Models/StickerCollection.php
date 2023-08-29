@@ -22,6 +22,8 @@ class StickerCollection extends model implements TranslatableContract
         'status',
     ];
 
+    protected $with = ['category'];
+
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -54,5 +56,10 @@ class StickerCollection extends model implements TranslatableContract
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+
+    public function category()
+    {
+        return $this->hasOne(StickerCategory::class, 'id', 'sticker_category_id'); // One-to-one relationship
     }
 }

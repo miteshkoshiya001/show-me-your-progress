@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\admin;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\StickerCategory;
 use App\Models\StickerCollection;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\StickerCategoryTranslation;
 use App\Http\Requests\StickerCollectionRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
 
 class StickerCollectionController extends Controller
 {
     public function index()
     {
-        $collections = StickerCollection::all();
+        $collections = StickerCollection::withTranslation()->get();
         return view('admin.stickers.collection.index', compact('collections'));
     }
+
+
 
     public function create()
     {

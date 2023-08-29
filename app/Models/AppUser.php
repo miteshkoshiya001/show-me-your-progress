@@ -30,6 +30,7 @@ class AppUser extends Model
         'api_token',
         'parent_id',
         'language',
+        'is_google_login'
     ];
 
     protected $hidden = [

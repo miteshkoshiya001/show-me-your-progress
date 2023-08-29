@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/data-list-view.css') }}">
 @endsection()
 @section('content')
+
     <div class="content-header row">
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
@@ -23,9 +24,103 @@
         </div>
     </div>
     <div class="content-body">
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
 
+                        <div class="d-flex justify-content-between">
+                            <div class="col-sm-5">
+                                <div class="d-flex align-items-end h-100 justify-content-center mt-sm-0 mt-3">
+                                    <img src="{{ asset('app-assets/images/illustrations/add-new-roles.png') }}"
+                                        class="img-fluid mt-sm-4 mt-md-0" alt="add-new-roles" width="83" />
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="card-body text-sm-end text-center ps-sm-0">
+                                    <a href="{{ localized_route('sticker-collection.create') }}"
+                                        class="btn btn-primary mb-2 text-nowrap add-new-role">
+                                        {{ __('messages.add_sticker_collection') }}
+                                    </a>
+                                    <p class="mb-0 mt-1">{{ __('messages.add_new_collection_if_does_not_exist') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @foreach ($collections as $key => $collection)
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="fw-normal mb-2">Total 4 users</h6>
+
+                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                    <li>
+                                        <div class="chip chip-{{ !empty($collection->is_premium) ? 'success' : 'danger' }}"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="{{ !empty($collection->is_premium) ? __('Is Premium') : __('Is Not Premium') }}">
+                                            <div class="chip-body">
+                                                <div class="chip-text">
+                                                    {{ !empty($collection->is_premium) ? __('messages.yes') : __('messages.no') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>&nbsp;
+                                    <li>
+                                        <div class="chip chip-{{ !empty($collection->is_default) ? 'success' : 'danger' }}"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="{{ !empty($collection->is_default) ? __('Is Default') : __('Is Not Default') }}">
+                                            <div class="chip-body">
+                                                <div class="chip-text">
+                                                    {{ !empty($collection->is_default) ? __('messages.yes') : __('messages.no') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>&nbsp;
+                                    <li>
+                                        <div class="chip chip-{{ !empty($collection->status) ? 'success' : 'danger' }}"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="{{ !empty($collection->status) ? __('status') : __('status') }}">
+                                            <div class="chip-body">
+                                                <div class="chip-text">
+                                                    {{ !empty($collection->status) ? __('messages.active') : __('messages.inactive') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end mt-1">
+                                <div class="role-heading">
+                                    <h4 class="mb-1">{{ !empty($collection->name) ? $collection->name : 'N/A' }} </h4>
+                                    <p class="mb-1">{{ __('messages.sticker-category') }}:
+                                        @if ($collection->category)
+                                            {{ $collection->category->name }}
+                                        @endif
+                                    </p>
+
+                                </div>
+                                <div class="action-buttons">
+                                    <a href="{{ localized_route('sticker-collection.edit', $collection->id) }}"
+                                        class="btn btn-outline-primary waves-effect waves-light"><i
+                                            class="feather icon-edit"></i></a>
+                                    <button type="button"
+                                        class="btn btn-outline-danger waves-effect waves-light action-delete"
+                                        data-module="{{ get_class($collection) }}" data-id="{{ $collection->id }}"><i
+                                            class="feather icon-trash"></i></button>
+                                    <a href="javascript:void(0);" class="text-muted"><i class="ti ti-copy ti-md"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
         {{-- New Table --}}
-        <section id="data-thumb-view" class="data-thumb-view-header">
+        {{-- <section id="data-thumb-view" class="data-thumb-view-header">
             <div class="action-btns d-none">
                 <div class="btn-dropdown mr-1 mb-1">
                     <div class="btn-group dropdown actions-dropodown">
@@ -41,7 +136,7 @@
                         <tr>
                             <th>{{ __('messages.sr_no') }}</th>
                             <th>{{ __('messages.name') }}</th>
-                            <th>{{__('messages.sticker-category')}}</th>
+                            <th>{{ __('messages.sticker-category') }}</th>
                             <th>{{ __('messages.is-premium') }}</th>
                             <th>{{ __('messages.is-default') }}</th>
                             <th>{{ __('messages.status') }}</th>
@@ -53,8 +148,9 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
 
-                                <td class="product-name"> {{ !empty($collection->name) ? $collection->name : 'N/A' }} </td>
-                                <td>{{$collection->sticker_category_id}}</td>
+                                <td class="product-name"> {{ !empty($collection->name) ? $collection->name : 'N/A' }}
+                                </td>
+                                <td>{{ $collection->sticker_category_id }}</td>
                                 <td>
                                     <div class="chip chip-{{ !empty($collection->is_premium) ? 'success' : 'danger' }}">
                                         <div class="chip-body">
@@ -100,7 +196,7 @@
                 </table>
             </div>
             <!-- dataTable ends -->
-        </section>
+        </section> --}}
     </div>
 @endsection
 @section('page-js')

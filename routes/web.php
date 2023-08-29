@@ -20,9 +20,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CommonActionController;
 use App\Http\Controllers\Admin\TrendingOfferController;
 use App\Http\Controllers\Admin\DeliveryAddressController;
-use App\Http\Controllers\admin\StickerCategoryController;
+use App\Http\Controllers\Admin\StickerCategoryController;
 use App\Http\Controllers\Admin\AvailableZipcodeController;
-use App\Http\Controllers\admin\StickerCollectionController;
+use App\Http\Controllers\Admin\StickerCollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::multilingual('sorting/list/{id}', [CategoryController::class, 'productSortingList'])->names(Helper::getMultiLangRoute('product.sorting.list.category'));
     });
 
-    Route::group(['prefix' => 'sticker-category'], function () {
+    Route::group(['prefix' => 'sticker-categories'], function () {
         Route::multilingual('', [StickerCategoryController::class, 'index'])->names(Helper::getMultiLangRoute('sticker-categories'));
         Route::multilingual('create', [StickerCategoryController::class, 'create'])->names(Helper::getMultiLangRoute('create.sticker-category'));
         Route::multilingual('edit/{id}', [StickerCategoryController::class, 'edit'])->names(Helper::getMultiLangRoute('edit.sticker-category'));

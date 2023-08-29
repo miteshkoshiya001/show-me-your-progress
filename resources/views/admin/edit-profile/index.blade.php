@@ -1,16 +1,30 @@
 @extends('layouts.admin.template')
 
-@section('title', __('messages.users'))
+@section('title', __('messages.change_password'))
 @section('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/data-list-view.css') }}">
 @endsection()
 @section('content')
     <!-- Content wrapper -->
-
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a
+                                    href="{{ localized_route('dashboard') }}">{{ __('messages.home') }}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{__('messages.change_password')}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Security</h4>
-
         <div class="row">
             <div class="col-md-12">
                 <!-- Change Password -->

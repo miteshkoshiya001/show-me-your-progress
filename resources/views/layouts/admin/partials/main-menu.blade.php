@@ -36,17 +36,27 @@
                     </span>
                 </a>
             </li>
+
             <li class="nav-item {{ Helper::isActiveUrl('category') }}">
                 <a href="{{ localized_route('categories') }}"><i class="feather icon-list"></i><span class="menu-title"
                         data-i18n="Categories">{{ __('messages.user_categories') }}</span></a>
             </li>
-            <li class="nav-item {{ Helper::isActiveUrl('Sticker Category') }}">
+            {{-- <li class="nav-item {{ Helper::isActiveUrl('sticker-categories') }}">
                 <a href="{{ localized_route('sticker-categories') }}"><i class="feather icon-list"></i><span class="menu-title"
                         data-i18n="StickerCategories">{{ __('messages.sticker_category') }}</span></a>
-            </li>
-            <li class="nav-item {{ Helper::isActiveUrl('Sticker Collection') }}">
+            </li> --}}
+            {{-- <li class="nav-item {{ Helper::isActiveUrl('sticker-collection') }}">
                 <a href="{{ localized_route('sticker-collection.index') }}"><i class="feather icon-list"></i><span class="menu-title"
                         data-i18n="StickerCollections">{{ __('messages.sticker_collection') }}</span></a>
+            </li> --}}
+            <li class="nav-item"><a href="#"><i class="feather icon-list"></i><span class="menu-title" data-i18n="Sticker">{{ __('messages.sticker') }}</span></a>
+                <ul class="menu-content">
+                    <li class="{{ Helper::isActiveUrl('sticker-categories') }}"><a href="{{ localized_route('sticker-categories') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="StickerCategories">{{ __('messages.sticker_category') }}</span></a>
+                    </li>
+                    <li class="{{ Helper::isActiveUrl('sticker-collection') }}"><a href="{{ localized_route('sticker-collection.index') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="StickerCollection">{{ __('messages.sticker_collection') }}</span></a>
+                    </li>
+
+                </ul>
             </li>
             {{-- <li class="nav-item {{ Helper::isActiveUrl('units-of-measurement') }}">
                 <a href="{{ localized_route('uoms') }}"><i class="feather icon-grid"></i><span
