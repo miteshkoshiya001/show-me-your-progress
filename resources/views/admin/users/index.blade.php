@@ -116,68 +116,73 @@
                         </div>
                         <div class="data-items pb-3 ps ps--active-y">
                             <div class="data-fields px-2 mt-3">
-                                <form id="saveUserForm">
-                                    <input type="hidden" name="user_id" id="data-id" value="">
-                                    <div class="row">
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-firstname">{{ __('messages.first_name') }}</label>
-                                            <input type="text" name="first_name" class="form-control" id="data-firstname"
-                                                value="{{ $user->first_name }}">
+                                @isset($user)
+                                    <form id="saveUserForm">
+                                        <input type="hidden" name="user_id" id="data-id" value="">
+                                        <div class="row">
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="data-firstname">{{ __('messages.first_name') }}</label>
+                                                <input type="text" name="first_name" class="form-control"
+                                                    id="data-firstname"
+                                                    value="{{ !empty($user->first_name) ? $user->first_name : null }}">
+                                            </div>
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="data-lastname">{{ __('messages.last_name') }}</label>
+                                                <input type="text" name="last_name" class="form-control"
+                                                    id="data-lastname" value="{{ $user->last_name }}">
+                                            </div>
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="data-username">{{ __('messages.user_name') }}</label>
+                                                <input type="text" name="username" class="form-control"
+                                                    id="data-username" value="{{ $user->username }}">
+                                            </div>
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="data-phone">{{ __('messages.phone') }}</label>
+                                                <input type="text" name="phone" class="form-control" id="data-phone"
+                                                    value="{{ $user->phone }}">
+                                            </div>
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="data-email">{{ __('messages.email') }}</label>
+                                                <input type="text" name="email" class="form-control" id="data-email"
+                                                    value="{{ $user->email }}">
+                                            </div>
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="user_category_filter">{{ __('messages.user_type') }}</label>
+                                                <select class="form-control" id="user_category_filter"
+                                                    name="user_category_id">
+                                                    <option value="">{{ __('messages.user_type') }}</option>
+                                                    @foreach ($userCategories as $category)
+                                                        <option value="{{ $category->id }}"
+                                                            {{ $category->id === $user->user_category_id ? 'selected' : '' }}>
+                                                            {{ $category->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 data-field-col">
+                                                <label for="data-language">{{ __('messages.language') }}</label>
+                                                <input type="text" name="language" class="form-control"
+                                                    id="data-language" value="{{ $user->language }}">
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 data-field-col">
+                                                <fieldset class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch switch-lg custom-switch-success mr-2 mb-1">
+                                                        <label class="mb-0">{{ __('messages.status') }}</label>
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitchStatus" name="status" value="1"
+                                                            {{ $user->status == 1 ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="customSwitchStatus">
+                                                            <span
+                                                                class="switch-text-left">{{ __('messages.active') }}</span>
+                                                            <span
+                                                                class="switch-text-right">{{ __('messages.inactive') }}</span>
+                                                        </label>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-lastname">{{ __('messages.last_name') }}</label>
-                                            <input type="text" name="last_name" class="form-control" id="data-lastname"
-                                                value="{{ $user->last_name }}">
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-username">{{ __('messages.user_name') }}</label>
-                                            <input type="text" name="username" class="form-control" id="data-username"
-                                                value="{{ $user->username }}">
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-phone">{{ __('messages.phone') }}</label>
-                                            <input type="text" name="phone" class="form-control" id="data-phone"
-                                                value="{{ $user->phone }}">
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-email">{{ __('messages.email') }}</label>
-                                            <input type="text" name="email" class="form-control" id="data-email"
-                                                value="{{ $user->email }}">
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="user_category_filter">{{ __('messages.user_type') }}</label>
-                                            <select class="form-control" id="user_category_filter" name="user_category_id">
-                                                <option value="">{{ __('messages.user_type') }}</option>
-                                                @foreach ($userCategories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                        {{ $category->id === $user->user_category_id ? 'selected' : '' }}>
-                                                        {{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 data-field-col">
-                                            <label for="data-language">{{ __('messages.language') }}</label>
-                                            <input type="text" name="language" class="form-control"
-                                                id="data-language" value="{{ $user->language }}">
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 data-field-col">
-                                            <fieldset class="form-group">
-                                                <div
-                                                    class="custom-control custom-switch switch-lg custom-switch-success mr-2 mb-1">
-                                                    <label class="mb-0">{{ __('messages.status') }}</label>
-                                                    <input type="checkbox" class="custom-control-input"
-                                                        id="customSwitchStatus" name="status" value="1"
-                                                        {{ $user->status == 1 ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="customSwitchStatus">
-                                                        <span class="switch-text-left">{{ __('messages.active') }}</span>
-                                                        <span
-                                                            class="switch-text-right">{{ __('messages.inactive') }}</span>
-                                                    </label>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+@endisset
                             </div>
                             <!-- ... -->
                         </div>

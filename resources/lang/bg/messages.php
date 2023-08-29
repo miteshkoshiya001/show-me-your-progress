@@ -58,6 +58,7 @@ return [
     'sticker_collection_list' => 'Списък с колекция от стикери',
     'image' => 'изображение',
     'parent_members_list'=>'Списък на членовете',
+    'challenge_created'=>'създадено предизвикателство',
     'parent_category' => 'પેરેન્ટ કેટેગરી',
     'action' => 'действие',
     'users' => 'потребители',

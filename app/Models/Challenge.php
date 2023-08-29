@@ -16,6 +16,8 @@ class Challenge  extends Model implements TranslatableContract
     protected $translationModel = 'App\Models\ChallangeTranslate';
 
     public $translatedAttributes = ['title', 'description'];
+    protected $appends = ['image_url'];
+
     public $fillable = [
         'video_link',
         'image',
@@ -51,7 +53,13 @@ class Challenge  extends Model implements TranslatableContract
     {
         $query->where('status', 1);
     }
-
-
-
+    public function getImageUrlAttribute()
+    {
+        $id = $this->attributes['id'];
+        if (!empty($id)) {
+            return !empty($this->attributes['image']) && file_exists(storage_path('app/public/challenges/' . $this->attributes['image']))
+                ? asset('storage/challenges/'. $this->attributes['image'])
+                : null;
+        }
+    }
 }

@@ -1,16 +1,18 @@
 <?php
+
 namespace App\Http\Requests;
 
-use Astrotomic\Translatable\Validation\RuleFactory;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 
-class ChallengeRequest extends MinimallRequest
+class ChallengeRequest extends FormRequest
 {
-    protected $redirect = 'challenge/create';
-
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -18,40 +20,35 @@ class ChallengeRequest extends MinimallRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
-        $rules = RuleFactory::make([
-            '%title%' => 'required|string',
-            '%description%' => 'required|string',
-            'video_link' => 'required|string',
-            'image' => 'required|string',
-            'status' => 'required|boolean',
-        ]);
+        $userLanguage = request()->authUserLocale;
+        // dd($userLanguage);
 
-        return $rules;
-    }
-
-    public function attributes()
-    {
         return [
-            'en.title' => 'title (EN)',
-            'bg.title' => 'title (BG)',
-            'en.description' => 'description (EN)',
-            'bg.description' => 'description (BG)',
-            'video_link' => 'video link',
-            'image' => 'image',
-            'status' => 'status',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'video_link' => 'required|string',
+            'image' => 'file|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'sometimes|in:0,1'
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
-        $messages = [
-            'required' => 'Challenge :attribute is required.',
-            'boolean' => 'Challenge :attribute must be a boolean value.',
+        return [
+            'title.required' => 'Challenge title is required.',
+            'description.required' => 'Challenge description is required.',
+            'video_link.required' => 'Video link is required.',
+            'image.required' => 'Image is required.',
+            'status.in' => 'Invalid status value. Must be either 0 or 1.'
         ];
-        return $messages;
     }
 }

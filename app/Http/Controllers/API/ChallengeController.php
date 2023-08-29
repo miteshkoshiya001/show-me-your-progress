@@ -12,21 +12,26 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ChallengeController extends Controller
 {
+
     public function store(ChallengeRequest $request)
     {
         try {
             $challenge = new Challenge();
             $challenge->video_link = $request->input('video_link');
-            $challenge->image = $request->input('image');
             $challenge->status = $request->input('status');
 
-            // Store the translatable fields for each locale
-            foreach ($request->input('title') as $locale => $title) {
-                $challenge->translateOrNew($locale)->title = $title;
-            }
+            // Get the authenticated user's default language
+            $userLanguage = $request->authUserLocale;
 
-            foreach ($request->input('description') as $locale => $description) {
-                $challenge->translateOrNew($locale)->description = $description;
+            // Store the title and description in the user's default language
+            $challenge->translateOrNew($userLanguage)->title = $request->input('title');
+            $challenge->translateOrNew($userLanguage)->description = $request->input('description');
+
+            // Store the image file in storage and get the file name
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('challenges', 'public'); // 'challenges' is the storage path
+                $imageFileName = pathinfo($imagePath, PATHINFO_BASENAME);
+                $challenge->image = $imageFileName;
             }
 
             $challenge->save();
@@ -37,13 +42,6 @@ class ChallengeController extends Controller
                 'message' => __('messages.challenge_created'),
                 'data' => $challenge
             ]);
-        } catch (QueryException $ex) {
-            return response()->json([
-                'code' => Response::HTTP_BAD_REQUEST,
-                'status' => false,
-                'message' => __('messages.something_went_wrong'),
-                'QueryException' => $ex->getMessage(),
-            ]);
         } catch (\Exception $exception) {
             return response()->json([
                 'code' => Response::HTTP_BAD_REQUEST,
@@ -52,4 +50,6 @@ class ChallengeController extends Controller
             ]);
         }
     }
+
+
 }

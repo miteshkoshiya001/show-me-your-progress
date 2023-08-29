@@ -31,6 +31,8 @@ class EnsureTokenIsValid
         try {
             $appUser = AppUser::where('api_token', $token)->firstOrFail();
             $request->merge(['authUserId' => $appUser->id]);
+            $request->merge(['authUserLocale' => $appUser->language]);
+
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'code' => JsonResponse::HTTP_UNAUTHORIZED,

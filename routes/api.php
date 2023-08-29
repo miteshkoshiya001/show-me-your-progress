@@ -34,21 +34,8 @@ Route::post('app-login', [AuthController::class, 'login']);
 Route::get('cms', [SettingController::class, 'index']);
 Route::get('total-user-coupons-order', [AuthController::class, 'countUserDeliveredOrderCoupon']);
 
-Route::group(['prefix' => 'user-categories'], function () {
-    Route::get('list', [CategoryController::class, 'index']);
-});
-Route::group(['prefix' => 'sticker'], function () {
-    Route::get('categories-list', [StickerCategoryController::class, 'index']);
-    Route::get('collections-list', [StickerCollectionController::class, 'index']);
-});
 
-Route::group(['prefix' => 'challenges'], function () {
-    Route::get('/', [ChallengeController::class, 'index']);
-    Route::get('/{id}', [ChallengeController::class, 'show']);
-    Route::post('create', [ChallengeController::class, 'store']);
-    Route::put('/update/{id}', [ChallengeController::class, 'update']);
-    Route::delete('delete/{id}', [ChallengeController::class, 'destroy']);
-});
+
 Route::group(['middleware' => 'valid.token'], function () {
     Route::get('my-members', [AuthController::class, 'getParentMembers']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
@@ -57,7 +44,20 @@ Route::group(['middleware' => 'valid.token'], function () {
     Route::post('user/language/update', [AuthController::class, 'userLanguageUpdate']);
     Route::post('edit/profile', [AuthController::class, 'update']);
     Route::get('wallet-history', [AuthController::class, 'walletHistory']);
-
+    Route::group(['prefix' => 'user-categories'], function () {
+        Route::get('list', [CategoryController::class, 'index']);
+    });
+    Route::group(['prefix' => 'sticker'], function () {
+        Route::get('categories-list', [StickerCategoryController::class, 'index']);
+        Route::get('collections-list', [StickerCollectionController::class, 'index']);
+    });
+    Route::group(['prefix' => 'challenges'], function () {
+        // Route::get('/', [ChallengeController::class, 'index']);
+        // Route::get('/{id}', [ChallengeController::class, 'show']);
+        Route::post('create', [ChallengeController::class, 'store']);
+        // Route::put('/update/{id}', [ChallengeController::class, 'update']);
+        // Route::delete('delete/{id}', [ChallengeController::class, 'destroy']);
+    });
     // Category routes
 
     Route::get('check-delivery-status', [TrendingOfferController::class, 'index']);

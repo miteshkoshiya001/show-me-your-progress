@@ -28,6 +28,8 @@ return [
     'sticker_category_updated_successfully' => "Sticker Category updated Successfully!",
     'sticker_collection_updated_successfully' => 'Sticker Collection Updated Successfully!',
     'sticker_collection_created_successfully' => 'Sticker Collection Created Successfully!',
+    'challenge_created'=>'Challenge Created',
+
     'select_sticker_category' => 'Select Sticker Category',
     'edit_collection' => 'Edit Collection',
     'sticker_category_list' =>'Sticker category List',
