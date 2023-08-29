@@ -7,6 +7,7 @@ use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ChallengeController;
 use App\Http\Controllers\API\TrendingOfferController;
 use App\Http\Controllers\API\DeliveryAddressController;
 use App\Http\Controllers\API\StickerCategoryController;
@@ -39,6 +40,14 @@ Route::group(['prefix' => 'user-categories'], function () {
 Route::group(['prefix' => 'sticker'], function () {
     Route::get('categories-list', [StickerCategoryController::class, 'index']);
     Route::get('collections-list', [StickerCollectionController::class, 'index']);
+});
+
+Route::group(['prefix' => 'challenges'], function () {
+    Route::get('/', [ChallengeController::class, 'index']);
+    Route::get('/{id}', [ChallengeController::class, 'show']);
+    Route::post('create', [ChallengeController::class, 'store']);
+    Route::put('/update/{id}', [ChallengeController::class, 'update']);
+    Route::delete('delete/{id}', [ChallengeController::class, 'destroy']);
 });
 Route::group(['middleware' => 'valid.token'], function () {
     Route::get('my-members', [AuthController::class, 'getParentMembers']);

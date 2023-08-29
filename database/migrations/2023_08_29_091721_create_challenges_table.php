@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 250);
-            $table->text('description');
             $table->string('video_link')->nullable();
             $table->string('image')->nullable();
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(0)->comment('0 = Inactive, 1 = Active');
             $table->timestamps();
             $table->softDeletes();
 

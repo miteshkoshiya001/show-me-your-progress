@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('challenge_members', function (Blueprint $table) {
+        Schema::create('challange_translates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('challenge_id');
-            $table->unsignedBigInteger('member_id');
+            $table->foreign('challenge_id')->references('id')->on('challenges')->onDelete('cascade');
+            $table->string('title', 255);
+            $table->text('description')->nullable();
+            $table->string('locale')->index();
+            $table->unique(['challenge_id', 'locale']);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('challenge_id')->references('id')->on('challenges')->onDelete('cascade');
-            $table->foreign('member_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('challenge_members');
+        Schema::dropIfExists('challange_translates');
     }
 };
