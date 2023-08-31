@@ -24,6 +24,7 @@ class AppUser extends Model
         'username',
         'phone',
         'user_category_id',
+        'member_type',
         'referral_code',
         'password',
         'status',

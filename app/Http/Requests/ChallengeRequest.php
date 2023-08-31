@@ -2,17 +2,18 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\App;
+use App\Http\Requests\MinimallRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class ChallengeRequest extends FormRequest
+class ChallengeRequest extends MinimallRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
         return true;
     }
@@ -22,7 +23,7 @@ class ChallengeRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules():array
     {
         $userLanguage = request()->authUserLocale;
         // dd($userLanguage);
@@ -32,7 +33,7 @@ class ChallengeRequest extends FormRequest
             'description' => 'required|string',
             'video_link' => 'required|string',
             'image' => 'file|image|mimes:jpeg,png,jpg|max:2048',
-            'status' => 'sometimes|in:0,1'
+            'status' => 'sometimes|nullable|in:0,1'
         ];
     }
 

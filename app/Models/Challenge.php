@@ -48,7 +48,10 @@ class Challenge  extends Model implements TranslatableContract
         self::updated(function ($model) {
         });
     }
-
+    public function members()
+    {
+        return $this->belongsToMany(AppUser::class, 'challenge_members', 'challenge_id', 'member_id');
+    }
     public function scopeActive($query)
     {
         $query->where('status', 1);
@@ -58,7 +61,7 @@ class Challenge  extends Model implements TranslatableContract
         $id = $this->attributes['id'];
         if (!empty($id)) {
             return !empty($this->attributes['image']) && file_exists(storage_path('app/public/challenges/' . $this->attributes['image']))
-                ? asset('storage/challenges/'. $this->attributes['image'])
+                ? asset('storage/challenges/' . $this->attributes['image'])
                 : null;
         }
     }

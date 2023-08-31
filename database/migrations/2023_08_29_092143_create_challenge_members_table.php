@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('challenge_id')->references('id')->on('challenges')->onDelete('cascade');
-            $table->foreign('member_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('member_id')->references('id')->on('app_users')->onDelete('cascade');
         });
     }
 

@@ -47,4 +47,5 @@ class CategoryRequest extends MinimallRequest
         ];
         return $messages;
     }
+
 }

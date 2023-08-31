@@ -65,6 +65,13 @@ return [
     'users' => 'Users',
     'phone' => 'Phone',
     'avatar' => 'Avatar',
+    'free' =>'Free',
+    'premium'=>'Premium',
+    'challenge_deleted'=>'Challenge Deleted Successfully',
+    'challenge_list' => 'Challenges List',
+    'found' => 'Found',
+    'challenge_updated' => "Challenge Updated Successfully",
+
     'email' => 'Email',
     'invalid_id' => 'Invalid id',
     'your_password_has_been_changed_suucessfully' => 'Your password has been changed suucessfully',

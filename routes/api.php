@@ -52,11 +52,12 @@ Route::group(['middleware' => 'valid.token'], function () {
         Route::get('collections-list', [StickerCollectionController::class, 'index']);
     });
     Route::group(['prefix' => 'challenges'], function () {
-        // Route::get('/', [ChallengeController::class, 'index']);
-        // Route::get('/{id}', [ChallengeController::class, 'show']);
+        Route::get('/', [ChallengeController::class, 'index']);
+        Route::get('/{id}', [ChallengeController::class, 'show']);
         Route::post('create', [ChallengeController::class, 'store']);
-        // Route::put('/update/{id}', [ChallengeController::class, 'update']);
-        // Route::delete('delete/{id}', [ChallengeController::class, 'destroy']);
+        Route::put('/update/{id}', [ChallengeController::class, 'update']);
+        Route::delete('/delete/{id}', [ChallengeController::class, 'destroy']);
+
     });
     // Category routes
 

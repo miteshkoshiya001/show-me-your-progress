@@ -27,7 +27,6 @@ class AuthController extends Controller
      */
     public function store(AppUserRequest $request)
     {
-        // dd($request->all());
         try {
             // Check if the user already exists
             $appUser = AppUser::whereNotNull('username')
@@ -37,7 +36,6 @@ class AuthController extends Controller
                 })
                 ->first();
 
-
             if (!empty($appUser)) {
                 return response()->json([
                     'code' => Response::HTTP_BAD_REQUEST,
@@ -46,25 +44,9 @@ class AuthController extends Controller
                     'data' => []
                 ]);
             }
+
             $referralCode = $request->input('referral_code');
             $parentUser = null;
-            if (empty($referralCode)) {
-                // Check if the user_category_id exists in user_categories table with status=1
-                $userCategoryId = $request->get('user_category_id');
-                $validUserCategory = Category::where('id', $userCategoryId)
-                    ->where('status', 1)
-                    ->exists();
-
-                if (!$validUserCategory) {
-                    return response()->json([
-                        'code' => Response::HTTP_BAD_REQUEST,
-                        'status' => false,
-                        'message' => __('messages.invalid_user_category'),
-                        'data' => []
-                    ]);
-                }
-            }
-
 
             if (!empty($referralCode)) {
                 // Find the parent user with the given referral code
@@ -80,15 +62,15 @@ class AuthController extends Controller
 
             $parentId = !empty($parentUser) ? $parentUser->id : 0;
             $request['parent_id'] = $parentId;
+
             // Create a new AppUser instance
             $appUser = new AppUser();
             $appUser->fill($request->all())->save();
-            // $appUser->save($request->all());
 
             // Handle avatar upload
-            if (!empty($request->file('avatar'))) {
+            if ($request->hasFile('avatar')) {
                 $file = $request->file('avatar');
-                $path = 'user/' . $appUser['id'];
+                $path = 'user/' . $appUser->id;
                 $fileName = Helper::storeImage($file, $path);
                 $appUser->avatar = $fileName;
                 $appUser->save();
@@ -100,7 +82,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => Response::HTTP_CREATED,
                 'status' => true,
-                'message' =>  __('messages.registered_successfully'),
+                'message' => __('messages.registered_successfully'),
                 'data' => new AppUserResource($appUser)
             ]);
         } catch (QueryException $ex) {
@@ -114,7 +96,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => Response::HTTP_BAD_REQUEST,
                 'status' => false,
-                'message' =>  __('messages.no_record_found'),
+                'message' => __('messages.no_record_found'),
             ]);
         } catch (\Exception $exception) {
             return response()->json([
@@ -124,6 +106,7 @@ class AuthController extends Controller
             ]);
         }
     }
+
     public function changePassword(Request $request)
     {
         try {
@@ -215,54 +198,54 @@ class AuthController extends Controller
     //     /**
     //      * Update the specified resource in storage.
     //      */
-    //     public function update(AppUserRequest $request)
-    //     {
-    //         try {
-    //             // Find the user by authUserId
-    //             $appUser = AppUser::findOrFail($request->get('authUserId'));
+    public function update(AppUserRequest $request)
+    {
+        try {
+            // Find the user by authUserId
+            $appUser = AppUser::findOrFail($request->get('authUserId'));
 
-    //             // Handle avatar upload and deletion of old avatar
-    //             $oldAvatar = $appUser->avatar;
-    //             $pathImage = 'public/user/' . $appUser['id'] . '/' . $appUser['avatar'];
-    //             $appUser->fill($request->validated())->save();
-    //             if (!empty($request->file('avatar'))) {
-    //                 $file = $request->file('avatar');
-    //                 $path = 'user/' . $appUser['id'];
-    //                 $fileName = Helper::storeImage($file, $path);
-    //                 if (!empty($fileName) && $oldAvatar != "") {
-    //                     $pathImage = 'public/user/' . $appUser['id'] . '/' . $oldAvatar;
-    //                     Helper::removeImage($pathImage);
-    //                 }
-    //                 $appUser->avatar = $fileName;
-    //             }
-    //             $appUser->save();
+            // Handle avatar upload and deletion of old avatar
+            $oldAvatar = $appUser->avatar;
+            $pathImage = 'public/user/' . $appUser['id'] . '/' . $appUser['avatar'];
+            $appUser->fill($request->validated())->save();
+            if (!empty($request->file('avatar'))) {
+                $file = $request->file('avatar');
+                $path = 'user/' . $appUser['id'];
+                $fileName = Helper::storeImage($file, $path);
+                if (!empty($fileName) && $oldAvatar != "") {
+                    $pathImage = 'public/user/' . $appUser['id'] . '/' . $oldAvatar;
+                    Helper::removeImage($pathImage);
+                }
+                $appUser->avatar = $fileName;
+            }
+            $appUser->save();
 
-    //             return response()->json([
-    //                 'code' => Response::HTTP_CREATED,
-    //                 'status' => true,
-    //                 'message' =>  __('messages.user_edit_prodile_has_been_successfully'),
-    //                 'data' => new AppUserResource($appUser)
-    //             ]);
-    //         } catch (QueryException $ex) {
-    //             return response()->json([
-    //                 'code' => Response::HTTP_BAD_REQUEST,
-    //                 'status' => false,
-    //                 'message' => __('messages.something_went_wrong'),
-    //             ]);
-    //         } catch (ModelNotFoundException $exception) {
-    //             return response()->json([
-    //                 'code' => Response::HTTP_BAD_REQUEST,
-    //                 'status' => false,
-    //                 'message' =>  __('messages.no_record_found'),
-    //             ]);
-    //         } catch (\Exception $exception) {
-    //             return response()->json([
-    //                 'code' => Response::HTTP_BAD_REQUEST,
-    //                 'status' => false,
-    //                 'message' => $exception->getMessage(),
-    //             ]);
-    //         }
-    //     }
+            return response()->json([
+                'code' => Response::HTTP_CREATED,
+                'status' => true,
+                'message' =>  __('messages.user_edit_prodile_has_been_successfully'),
+                'data' => new AppUserResource($appUser)
+            ]);
+        } catch (QueryException $ex) {
+            return response()->json([
+                'code' => Response::HTTP_BAD_REQUEST,
+                'status' => false,
+                'message' => __('messages.something_went_wrong'),
+            ]);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'code' => Response::HTTP_BAD_REQUEST,
+                'status' => false,
+                'message' =>  __('messages.no_record_found'),
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'code' => Response::HTTP_BAD_REQUEST,
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ]);
+        }
+    }
 
     //     // Other methods remain unchanged
 
